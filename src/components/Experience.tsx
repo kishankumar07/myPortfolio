@@ -20,13 +20,17 @@ const Experience = () => {
     return index % 2 === 0 ? "text-left ml-auto" : "text-left mr-auto";
   };
 
-  const getPointerClass = () => {
-    return "absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary rounded-sm border-2 border-base-100 shadow-lg z-20";
+  const getPointerClass = (index: number) => {
+    const isLeftAligned = index % 2 === 0; // Check if the card is left-aligned
+  
+    return `absolute ${
+      isLeftAligned ? "left-0 transform translate-x-[-50%]" : "right-0 transform translate-x-[50%]"
+    } w-4 h-4 bg-primary rounded-sm border-2 border-base-100 shadow-lg z-20`;
   };
-
+  
   return (
     <div id={`experience`} className="experience-section bg-base-200 ">
-      <h2 className="text-3xl md:text-4xl font-bold text-center text-primary mb-12">
+      <h2 className="text-3xl md:text-4xl xl:text-5xl font-bold text-center text-primary mb-12">
         Professional Experience
       </h2>
       <motion.div
@@ -47,7 +51,7 @@ const Experience = () => {
             {experiences.map((_, index) => (
               <motion.div
                 key={index}
-                className={getPointerClass()}
+                className={getPointerClass(index)} // Pass index to get the proper pointer alignment
                 style={{
                   top: `${(index + 1) * (100 / (experiences.length + 1))}%`,
                 }}
@@ -62,7 +66,7 @@ const Experience = () => {
             ))}
           </motion.div>
         )}
-
+  
         {/* Experience Cards */}
         <div className="flex flex-col items-center gap-10 md:gap-16">
           {experiences.map((exp, index) => (
@@ -103,13 +107,14 @@ const Experience = () => {
           ))}
         </div>
       </motion.div>
-
+  
       {/* Divider */}
       <div className="flex w-full flex-col ">
         <div className="divider"></div>
       </div>
     </div>
   );
+  
 };
 
 export default Experience;

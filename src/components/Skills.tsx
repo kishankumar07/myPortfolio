@@ -22,13 +22,13 @@ const Skills = () => {
     <div id={`about`} className="about-and-skills  p-6  bg-base-200 overflow-hidden">
       {/* About Me Section */}
       <section className="about-me-section mb-12">
-        <h2 className="text-3xl font-bold text-center text-primary mb-8">About Me</h2>
+        <h2 className="text-3xl md:text-4xl xl:text-5xl font-bold text-center text-primary mb-8">About Me</h2>
         <div className="flex flex-col md:flex-row items-center justify-center gap-8">
           {/* Photo */}
           <motion.img
-            src="/projectsImages/my_picture.jpeg"
+            src="/projectsImages/my_picture1.jpeg"
             alt="Your Name"
-            className="w-40 h-48 md:w-44 md:h-52 lg:w-60 lg:h-72 rounded-full shadow-lg outline-red-200 outline"
+            className="w-40 h-40 md:w-44 md:h-44 lg:w-64 lg:h-64 rounded-full shadow-lg outline-red-200 outline"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300 }}
           />
@@ -47,7 +47,7 @@ const Skills = () => {
 
       {/* Skills Section */}
       <section className="skills-section">
-        <h2 className="text-3xl font-bold text-center text-primary mt-16 mb-5">Skills</h2>
+        <h2 className="text-3xl md:text-4xl xl:text-5xl font-bold text-center text-primary mt-24 mb-5">Skills</h2>
 
         <div className={`grid ${gridCols} gap-6 justify-center items-center `}>
           {skills.map((skill, index) => (

@@ -1,8 +1,11 @@
 import { motion } from 'framer-motion';
+import  { Suspense, lazy } from 'react'
 import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { useMediaQuery } from 'react-responsive';
-import Books from './Three-d-Items/Books';
+// import Books from './Three-d-Items/Books';
+
+const Books = lazy(() => import('./Three-d-Items/Books')); // Lazy load Books component
 
 const Education = () => {
   const isSmall = useMediaQuery({ maxWidth: 440 });
@@ -11,9 +14,9 @@ const Education = () => {
 
   // Set 3D model properties dynamically based on screen size
   const modelProps = {
-    scale: isSmall ? 15 : isMobile ? 20 : isTablet ? 24 : 35,
+    scale: isSmall ? 30 : isMobile ? 30 : isTablet ? 24 : 34,
     position: isSmall
-      ? [0, -1, 1]
+      ? [0, -1.5, 1]
       : isMobile
       ? [0, -1.5, 1]
       : isTablet
@@ -47,6 +50,12 @@ const Education = () => {
     ? 'text-lg'
     : 'text-xl';
 
+    // Disable shadows on mobile/tablet for better performance
+  const lightingProps = {
+    intensity: 0.7,
+    position: [0, 10, 10] as [number, number, number],
+  };
+
   return (
     <div className="flex flex-col items-center justify-center bg-base-200 overflow-hidden">
       {/* Education Heading */}
@@ -54,7 +63,7 @@ const Education = () => {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className={`${headingSize} font-bold text-3xl md:text-4xl text-primary text-center w-full mb-8 mt-0 `}
+        className={`${headingSize} font-bold text-3xl md:text-5xl xl:text-6xl text-primary text-center w-full mb-8 mt-0 `}
       >
         Education
       </motion.h2>
@@ -63,24 +72,37 @@ const Education = () => {
         {/* 3D Model */}
         <div
           className={`${
-            isTablet ? 'w-1/2' : isMobile ? 'w-1/2' : 'w-full'
-          } flex justify-center mb-8 md:mb-0`}
+            isTablet ? 'w-1/2' : isMobile ? 'w-4/5' : 'w-5/6'
+          } flex justify-center mb-8 md:mb-0 `}
           style={{ height: isSmall ? '200px' : isMobile ? '300px' : '400px' }}
         >
-          <Canvas
-            className="w-full h-full"
-            camera={{
-              position: [0, 3, 10],
-              fov: 65,
-              near: 0.1,
-              far: 1000,
-            }}
-          >
-            <ambientLight intensity={0.7} />
-            <directionalLight position={[0, 10, 10]} intensity={1} />
-            <Books {...modelProps} />
-            <OrbitControls enableZoom={false} />
-          </Canvas>
+         {/* Wrapping the entire Canvas with Suspense for lazy loading */}
+         <Suspense fallback={
+                <div className="flex items-center justify-center h-full">
+                  <p>Loading</p>
+                  <span className="loading loading-dots loading-md text-primary"></span>
+                </div>
+              }>
+            <Canvas
+              className="w-full h-full"
+              camera={{
+                position: [0, 3, 10],
+                fov: isMobile ? 55 : 65, // Adjust FOV for smaller screens
+                near: 0.1,
+                far: 1000,
+              }}
+              frameloop="demand" // Reduce frame rate on mobile
+            >
+              <ambientLight intensity={0.7} />
+              <directionalLight
+                position={lightingProps.position}
+                intensity={lightingProps.intensity}
+              />
+              {/* Lazy-loaded 3D Books component */}
+              <Books {...modelProps} />
+              <OrbitControls enableZoom={false} />
+            </Canvas>
+          </Suspense>
         </div>
 
         {/* Education Content */}

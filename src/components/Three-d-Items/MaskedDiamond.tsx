@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { Mask, useMask } from "@react-three/drei";
-import * as THREE from 'three'
+import * as THREE from "three";
 
 interface MaskedDiamondProps {
   position?: [number, number, number];
@@ -14,8 +14,8 @@ interface MaskedDiamondProps {
 const MaskedDiamond: React.FC<MaskedDiamondProps> = ({
   position = [0, 0, 0],
   scale = 1,
-  jumpHeight = 2,
-  speed = 2,
+  jumpHeight = 10,
+  speed = 3,
 }) => {
   const { scene } = useGLTF(
     "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/target-stand/model.gltf"
@@ -26,9 +26,12 @@ const MaskedDiamond: React.FC<MaskedDiamondProps> = ({
   useFrame(({ clock }) => {
     if (groupRef.current) {
       const time = clock.getElapsedTime(); // Time in seconds
-      const yOffset = Math.sin(time * speed) * jumpHeight; // Sinusoidal motion
+
+      // Yoyo effect using a sine wave and energy boost
+      const yOffset =
+        Math.abs(Math.sin(time * speed)) * jumpHeight * Math.pow(0.8, time % 1);
+
       groupRef.current.position.y = position[1] + yOffset;
-      groupRef.current.rotation.y += 0.02; // Optional: Add rotation for effect
     }
   });
 

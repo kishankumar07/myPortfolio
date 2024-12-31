@@ -81,7 +81,7 @@ const ContactMe = () => {
   return (
     <div id={`contact`} className={`bg-base-200`}>
 
-     <h1 className='text-center text-primary font-bold text-3xl md:text-4xl'>Contact me</h1>
+     <h1 className='text-center text-primary font-bold text-3xl md:text-4xl xl:text-5xl'>Contact me</h1>
 
 
       {isMobile ?  (
@@ -89,7 +89,7 @@ const ContactMe = () => {
     <div
       className="mockup-phone bg-base-200 p-5 w-[320px] h-[600px] overflow-hidden"
       style={{
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", // Optional aesthetic enhancement
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", 
       }}
     >
       <div className="camera"></div>

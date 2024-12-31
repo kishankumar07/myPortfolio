@@ -37,9 +37,9 @@ const MenuIcon = () => {
       </button>
 
       {isMenuOpen && (
-  <div className="absolute top-12 left-0 -ml-16 w-32 bg-base-100 z-50  rounded-xl">
-    <div className="w-full flex justify-center">
-      <div className="flex flex-col items-center space-y-4  p-4 w-full sm:max-w-xs md:max-w-md lg:max-w-lg">
+  <div className="absolute top-12 left-0 -ml-20 w-32 bg-base-100 z-50  rounded-xl">
+    <div className="w-full flex justify-center  ">
+      <div className="flex flex-col items-center space-y-4   w-full sm:max-w-xs md:max-w-md lg:max-w-lg ">
         {NAV_LINKS.map((link, index) => (
           <Link
             key={index}
