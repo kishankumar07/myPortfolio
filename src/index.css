@@ -23,4 +23,7 @@
       content: none !important;
     }
     
+    .stop-bounce-on-hover:hover {
+      animation-play-state: paused;
+    }
     

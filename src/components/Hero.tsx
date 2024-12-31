@@ -20,7 +20,11 @@ const Hero = () => {
   // Memoized 3D Components to prevent unnecessary re-renders
   const MemoizedComputerTable = useMemo(
     () => (
-      <ComputerTable position={[10, -50, 0]} rotation={[0, Math.PI, 0]} scale={[1, 1, 1]} />
+      <ComputerTable
+        position={[10, -50, 0]}
+        rotation={[0, Math.PI, 0]}
+        scale={[1, 1, 1]}
+      />
     ),
     []
   );
@@ -55,7 +59,9 @@ const Hero = () => {
               <span role="img" aria-label="hello hand" className="wave">
                 👋
               </span>
-              <p className="animate__animated animate__rubberBand">Hello, I'm Kishan</p>
+              <p className="animate__animated animate__rubberBand">
+                Hello, I'm Kishan
+              </p>
             </h1>
 
             {/* Subheading */}
@@ -69,8 +75,10 @@ const Hero = () => {
               aria-label="Download My CV"
               onClick={() => {
                 const link = document.createElement("a");
-                link.href = "/cv/kishan_cv_mernuae.pdf";
-                link.download = "Kishan_CV.pdf";
+                // Use the Google Drive direct download link
+                link.href =
+                  "https://drive.google.com/uc?export=download&id=12gRCy_Yrr5_s9kNO8_KWgeF80P7McrcD";
+                link.download = "Kishan_CV.pdf"; 
                 link.click();
               }}
             >
@@ -107,8 +115,12 @@ const Hero = () => {
               >
                 {/* Lighting */}
                 <ambientLight intensity={0.5} />
-                <directionalLight position={[10, 10, 5]} intensity={1} castShadow />
-                
+                <directionalLight
+                  position={[10, 10, 5]}
+                  intensity={1}
+                  castShadow
+                />
+
                 {/* 3D Objects */}
                 {MemoizedComputerTable}
                 <MaskedDiamond position={[-90, -60, 0]} scale={20} />

@@ -1,50 +1,78 @@
-# React + TypeScript + Vite
+# 3D Portfolio Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A visually captivating portfolio website built using **React.js**, **Three.js**, and **TypeScript**, designed to showcase my projects, skills, and career journey. Styled with **Tailwind CSS** and **DaisyUI**, it features interactive 3D animations, responsive design, and smooth user interactions.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Features
 
-## Expanding the ESLint configuration
+- **Interactive 3D Animations**: Leveraging Three.js for immersive visuals.
+- **Modern UI Design**: Clean and professional design using Tailwind CSS and DaisyUI.
+- **Project Highlights**: Dedicated sections showcasing top projects with detailed descriptions and links.
+- **Responsive Design**: Fully optimized for all device sizes.
+- **Contact Form**: Integrated with EmailJS for easy communication.
+- **Fast Performance**: Optimized for speed and smooth navigation.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+---
 
-- Configure the top-level `parserOptions` property like this:
+## 🚀 Technologies Used
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **React.js**: For building the frontend.
+- **TypeScript**: Ensuring type safety and maintainable code.
+- **Three.js**: Creating dynamic 3D animations.
+- **Tailwind CSS**: Utility-first CSS framework for styling.
+- **DaisyUI**: Pre-designed UI components for rapid development.
+- **EmailJS**: Handling contact form submissions.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+---
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## 📷 Screenshots
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Home Page 
+![Portfolio Screenshot](https://drive.google.com/uc?export=view&id=1FOK5Y5_f6CRa6PIz-4xS2m6QrJ1gNK1s)
+
+
+
+## 🔗 Live Demo
+
+[www.kishanta.in](https://www.kishanta.in)
+
+
+
+
+## ⚙️ Installation & Setup
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/kishankumar07/myPortfolio.git
+  
+   cd portfolio-website
+   ```
+2. **Insall Dependencies**  
+    ```bash
+    npm install
+    ```
+3. **Run Development Server**    
+  ```bash
+  npm run dev
+  ```
+4. **Build for production**  
+  ```bash
+  npm run build
+  ```
+
+
+
+## 🔗 Links
+
+
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kishan-ta)
+[![medium](https://img.shields.io/badge/medium-12100E?style=for-the-badge&logo=medium&logoColor=white)](https://medium.com/@kishantashok)
+
+
+
+
+## License
+
+
+This project is licensed under the MIT License. See the [LICENSE](https://opensource.org/license/mit) file for details.

@@ -26,7 +26,7 @@ const Skills = () => {
         <div className="flex flex-col md:flex-row items-center justify-center gap-8">
           {/* Photo */}
           <motion.img
-            src="/projectsImages/my_picture1.jpeg"
+            src="https://res.cloudinary.com/da2gbgkqj/image/upload/v1735649330/my_picture1_g84eqo.jpg"
             alt="Your Name"
             className="w-40 h-40 md:w-44 md:h-44 lg:w-64 lg:h-64 rounded-full shadow-lg outline-red-200 outline"
             whileHover={{ scale: 1.05 }}
