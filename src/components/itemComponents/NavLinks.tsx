@@ -14,7 +14,7 @@ const NavLinks = ({ className }: NavLinksProps) => (
             smooth={true}
             duration={500}
             className={
-              `relative text-base-content text-lg font-medium px-3 py-2 transition-all duration-500 ease-in-out bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary lg:text-2xl cursor-pointer ${className}`
+              `relative text-base-content text-lg font-medium px-3 py-2 transition-all duration-500 ease-in-out bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary xl:text-2xl cursor-pointer ${className}`
             }
           >
             {link}
