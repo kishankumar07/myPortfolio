@@ -77,7 +77,7 @@ const Hero = () => {
                 const link = document.createElement("a");
                 // Use the Google Drive direct download link
                 link.href =
-                  "https://drive.google.com/uc?export=download&id=12gRCy_Yrr5_s9kNO8_KWgeF80P7McrcD";
+                  "https://drive.google.com/uc?export=download&id=1JYs0b1DuIDZ7AmC1nOz6eDhBIOo0cVF4";
                 link.download = "Kishan_CV.pdf"; 
                 link.click();
               }}
@@ -85,7 +85,7 @@ const Hero = () => {
               Download My CV
             </button>
           </div>
-
+         
           {/* 3D Canvas */}
           <div
             className={`w-full ${
