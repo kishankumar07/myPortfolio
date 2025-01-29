@@ -85,7 +85,7 @@ const Hero = () => {
               Download My CV
             </button>
           </div>
-         
+          
           {/* 3D Canvas */}
           <div
             className={`w-full ${
