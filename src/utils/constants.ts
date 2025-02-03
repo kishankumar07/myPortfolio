@@ -23,7 +23,7 @@
   { name: "REST API", texture: "https://res.cloudinary.com/da2gbgkqj/image/upload/v1735649855/restapi_zv9w5t.png" },
   { name: "PostgreSQL", texture: "https://res.cloudinary.com/da2gbgkqj/image/upload/v1735649853/psql_kwpkvz.png" },
   { name: "Git", texture: "https://res.cloudinary.com/da2gbgkqj/image/upload/v1735649844/git_npntvb.png" },
-  { name: "Microservices", texture: "https://res.cloudinary.com/da2gbgkqj/image/upload/v1735649849/microservices_f6ojb0.png" },
+  { name: "PHP", texture: "https://res.cloudinary.com/da2gbgkqj/image/upload/v1738603419/php_ozwidt.png" },
   { name: "Docker", texture: "https://res.cloudinary.com/da2gbgkqj/image/upload/v1735649843/docker_ezr8ui.png" },
   { name: "Postman", texture: "https://res.cloudinary.com/da2gbgkqj/image/upload/v1735649852/postman_zlsqo1.png" },
   { name: "Firebase", texture: "https://res.cloudinary.com/da2gbgkqj/image/upload/v1735649844/firebase_o6rhff.png" },
