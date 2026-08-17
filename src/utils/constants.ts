@@ -1,5 +1,5 @@
 // Navbar component
- const NAV_LINKS = ["About", "Projects", "Experience", "Contact"];
+ const NAV_LINKS = ["About", "Skills", "Experience", "Contact"];
 
 
 // Hero section's -- 3-D models view setting
@@ -77,7 +77,20 @@ const projects = [
 
 const experiences = [
   {
-    year: "Oct 2023 - Present",
+    year: "Feb 2025 - Present",
+    company: "Just Right Middle East FZCO",
+    location: "Dubai, UAE",
+    role: "IT Specialist & Web Developer",
+    details: [
+          "Provide end-user IT support for Windows systems, Microsoft 365, Outlook, hardware, software, printers, Wi-Fi and network connectivity.",
+          "Manage Microsoft 365 user accounts, email configuration, access permissions, employee onboarding and day-to-day user administration.",
+          "Coordinate IT assets, technology purchases, vendors, documentation and technical issue resolution across business operations.",
+          "Support Odoo ERP implementation activities, user coordination and business-process requirements.",
+          "Manage company websites, domains, hosting, email services and other digital platforms when required."
+    ]
+  },
+  {
+    year: "Oct 2023 - Dec 2024",
     company: "Brototype",
     role: "Full Stack Developer",
     details: [
@@ -88,7 +101,7 @@ const experiences = [
         
   },
   {
-    year: "Oct 2023 - Dec 2021",
+    year: "Dec 2021 - Oct 2023",
     company: "Reliance Industries Ltd.",
     role: "Telecom Engineer",
     details: [
@@ -99,7 +112,7 @@ const experiences = [
         
   },
   {
-    year: "Nov 2020 -Dec 2021",
+    year: "Nov 2020 - Dec 2021",
     company: "Sharewealth Securities Ltd.",
     role: "IT Support Executive",
     details: [

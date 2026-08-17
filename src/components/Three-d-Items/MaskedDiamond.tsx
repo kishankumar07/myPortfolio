@@ -17,9 +17,7 @@ const MaskedDiamond: React.FC<MaskedDiamondProps> = ({
   jumpHeight = 10,
   speed = 3,
 }) => {
-  const { scene } = useGLTF(
-    "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/target-stand/model.gltf"
-  );
+  const { scene } = useGLTF("/models/dflat.glb");
   const groupRef = useRef<THREE.Group>(null);
   const stencil = useMask(1, false);
 

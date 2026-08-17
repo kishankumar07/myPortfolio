@@ -1,4 +1,5 @@
 import { BsHouseUp } from "react-icons/bs";
+import { motion } from "framer-motion";
 // import { FaAnglesUp, FaUpwork } from "react-icons/fa6";
 
 const Footer = () => {
@@ -97,13 +98,15 @@ const Footer = () => {
         </nav>
 
         {/* Add Back to Top Button Here */}
-        <button
+        <motion.button
           onClick={scrollToTop}
-          className="mt-4 p-2 rounded-full bg-gray-500 text-white  shadow hover:bg-blue-900 transition-all flex items-center space-x-2 animate-bounce stop-bounce-on-hover"
+          animate={{ y: [0, -6, 0] }}
+          transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+          className="mt-4 md:mt-0 px-4 py-2 rounded-full bg-base-300 hover:bg-primary hover:text-primary-content text-base-content shadow-sm hover:shadow-md transition-colors duration-300 flex items-center space-x-2 group"
         >
-          <BsHouseUp className="text-2xl" />
-          <span>Back to top</span>
-        </button>
+          <BsHouseUp className="text-xl group-hover:scale-110 transition-transform duration-300" />
+          <span className="font-medium">Back to top</span>
+        </motion.button>
       </aside>
     </footer>
   );

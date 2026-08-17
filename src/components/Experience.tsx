@@ -96,7 +96,12 @@ const Experience = () => {
                 <p className="text-md md:text-primary text-secondary font-medium">
                   {exp.company}
                 </p>
-                <p className="text-sm italic mb-4">{exp.role}</p>
+                {(exp as any).location && (
+                  <p className="text-xs md:text-sm font-semibold opacity-80 mt-1">
+                    {(exp as any).location}
+                  </p>
+                )}
+                <p className="text-sm italic mb-4 mt-1">{exp.role}</p>
                 <ul className="list-disc space-y-2 pl-6 text-sm md:text-base">
                   {exp.details.map((detail, i) => (
                     <li key={i}>{detail}</li>

@@ -4,6 +4,7 @@ import { Suspense, useMemo } from "react";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { useMediaQuery } from "react-responsive";
+import { Link } from "react-scroll";
 import ComputerTable from "./Three-d-Items/ComputerTable";
 import Cube from "./Three-d-Items/Cube";
 import ReactLogo from "./Three-d-Items/ReactLogo";
@@ -64,26 +65,43 @@ const Hero = () => {
               </p>
             </h1>
 
-            {/* Subheading */}
-            <p className="lg:text-3xl md:text-2xl text-md text-primary animate__animated animate__swing">
-              Full Stack Developer from India
+            {/* Professional Headline */}
+            <h2 className="lg:text-2xl md:text-xl text-lg font-semibold text-primary animate__animated animate__fadeInUp">
+              IT Support Specialist | Microsoft 365 | Windows & Network Support
+            </h2>
+
+            {/* Supporting Description */}
+            <p className="text-base md:text-lg text-base-content/80 animate__animated animate__fadeInUp">
+              Supporting users, systems, and business operations through reliable IT solutions, proactive troubleshooting, and secure technology management.
             </p>
 
-            {/* Button */}
-            <button
-              className="btn btn-primary rounded-lg"
-              aria-label="Download My CV"
-              onClick={() => {
-                const link = document.createElement("a");
-                // Use the Google Drive direct download link
-                link.href =
-                  "https://drive.google.com/uc?export=download&id=1JYs0b1DuIDZ7AmC1nOz6eDhBIOo0cVF4";
-                link.download = "Kishan_CV.pdf"; 
-                link.click();
-              }}
-            >
-              Download My CV
-            </button>
+            {/* Location Line */}
+            <p className="text-sm font-medium text-primary/80 animate__animated animate__fadeInUp">
+              Based in Dubai, UAE
+            </p>
+
+            {/* Buttons */}
+            <div className="flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
+              <a
+                className="btn btn-primary rounded-lg"
+                aria-label="Download My CV"
+                href="https://drive.google.com/file/d/1Jgy0lbLWCplc1oJ7xvNlC9r-JEz74_HI/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Download My CV
+              </a>
+              
+              <Link
+                to="experience"
+                smooth={true}
+                duration={500}
+                className="btn btn-outline btn-primary rounded-lg"
+                aria-label="View My Experience"
+              >
+                View My Experience
+              </Link>
+            </div>
           </div>
           
           {/* 3D Canvas */}

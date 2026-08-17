@@ -17,7 +17,7 @@ const App = () => {
       <ToastContainer/>  
       <Hero/>
       <Skills/>
-      <Projects/>
+      {/* <Projects/> */}
       <Experience/>
       <Education/>
       <ContactMe/>
