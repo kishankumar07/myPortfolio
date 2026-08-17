@@ -8,7 +8,7 @@ Title: Stylized WW1 Plane
 
 
 import { useGLTF, useAnimations } from '@react-three/drei'
-import { GroupProps } from 'react-three-fiber'
+import { GroupProps } from '@react-three/fiber'
 import { useRef } from 'react'
 import * as THREE from 'three';
 
