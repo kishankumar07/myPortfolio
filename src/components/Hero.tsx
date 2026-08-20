@@ -85,7 +85,7 @@ const Hero = () => {
               <a
                 className="btn btn-primary rounded-lg"
                 aria-label="Download My CV"
-                href="https://drive.google.com/file/d/1Ol_Dj9vQg_imT4RAemq8M6SK_6NimJMx/view?usp=sharing"
+                href="https://drive.google.com/file/d/1vWFvdrq6w2xmXz9qwst4AUrTGfDhLMpb/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
               >
