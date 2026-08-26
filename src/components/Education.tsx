@@ -41,7 +41,7 @@ const Education = () => {
             Education
           </motion.h2>
           <p className="text-base sm:text-lg text-base-content/75 max-w-xl mx-auto">
-            Academic foundation in Engineering, Electronics, and Communication Technologies.
+            Building the technical foundation behind my career in IT and technology.
           </p>
         </div>
 
