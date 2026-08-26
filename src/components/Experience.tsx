@@ -1,125 +1,155 @@
-import { motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
-import { useEffect } from "react";
+import { FaBriefcase, FaBuilding, FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { experiences } from "../utils/constants";
 
+interface ExperienceItem {
+  year: string;
+  company: string;
+  role: string;
+  location?: string;
+  skills?: string[];
+  details: string[];
+}
+
 const Experience = () => {
-  const isSmall = useMediaQuery({ maxWidth: 440 });
-  const isMobile = useMediaQuery({ maxWidth: 768 });
-  // const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1024 });
-  const isAbove970 = useMediaQuery({ minWidth: 970 });
+  const isMobile = useMediaQuery({ maxWidth: 970 });
 
-  const controls = useAnimation();
-
-  useEffect(() => {
-    controls.start("visible");
-  }, [controls]);
-
-  const getAlignmentClass = (index: number) => {
-    if (isSmall || isMobile) return "text-center mx-auto";
-    return index % 2 === 0 ? "text-left ml-auto" : "text-left mr-auto";
-  };
-
-  const getPointerClass = (index: number) => {
-    const isLeftAligned = index % 2 === 0; // Check if the card is left-aligned
-  
-    return `absolute ${
-      isLeftAligned ? "left-0 transform translate-x-[-50%]" : "right-0 transform translate-x-[50%]"
-    } w-4 h-4 bg-primary rounded-sm border-2 border-base-100 shadow-lg z-20`;
-  };
-  
   return (
-    <div id={`experience`} className="experience-section bg-base-200 ">
-      <h2 className="text-3xl md:text-4xl xl:text-5xl font-bold text-center text-primary mb-12">
-        Professional Experience
-      </h2>
-      <motion.div
-        className="relative w-full mx-auto max-w-5xl px-4 "
-        initial="hidden"
-        animate={controls}
-        viewport={{ once: true }}
-      >
-        {/* Clean Animated Timeline */}
-        {isAbove970 && (
-          <motion.div
-            className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary to-secondary origin-top z-10"
-            initial={{ scaleY: 0 }}
-            animate={{ scaleY: 1 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-          >
-            {/* Pointers */}
-            {experiences.map((_, index) => (
-              <motion.div
-                key={index}
-                className={getPointerClass(index)} // Pass index to get the proper pointer alignment
-                style={{
-                  top: `${(index + 1) * (100 / (experiences.length + 1))}%`,
-                }}
-                animate={{ scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 2,
-                  delay: index * 0.5,
-                  ease: "easeInOut",
-                }}
-              />
-            ))}
-          </motion.div>
-        )}
-  
-        {/* Experience Cards */}
-        <div className="flex flex-col items-center gap-10 md:gap-16">
-          {experiences.map((exp, index) => (
-            <motion.div
-              key={index}
-              className={`relative flex flex-col w-full max-w-md card bg-base-100 shadow-lg ${getAlignmentClass(
-                index
-              )}`}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: index * 0.3,
-                type: "spring",
-                stiffness: 120,
-              }}
-            >
-              {/* Experience Card */}
-              <motion.div
-                className="card-body p-6 hover:scale-105 hover:shadow-2xl transition-all duration-300 z-20"
-                whileHover={{
-                  boxShadow: "0px 0px 20px rgba(0, 162, 255, 0.5)",
-                }}
-              >
-                <h3 className="card-title text-base md:text-xl font-bold text-primary">
-                  {exp.year}
-                </h3>
-                <p className="text-md md:text-primary text-secondary font-medium">
-                  {exp.company}
-                </p>
-                {(exp as any).location && (
-                  <p className="text-xs md:text-sm font-semibold opacity-80 mt-1">
-                    {(exp as any).location}
-                  </p>
-                )}
-                <p className="text-sm italic mb-4 mt-1">{exp.role}</p>
-                <ul className="list-disc space-y-2 pl-6 text-sm md:text-base">
-                  {exp.details.map((detail, i) => (
-                    <li key={i}>{detail}</li>
-                  ))}
-                </ul>
-              </motion.div>
-            </motion.div>
-          ))}
+    <div id="experience" className="experience-section bg-base-200 py-16 px-4 md:px-8 overflow-hidden">
+      <div className="max-w-6xl mx-auto">
+        {/* Section Header */}
+        <div className="text-center mb-16 space-y-3">
+          <h2 className="text-3xl md:text-4xl xl:text-5xl font-extrabold text-primary">
+            Professional Experience
+          </h2>
+          <p className="text-base sm:text-lg text-base-content/75 max-w-xl mx-auto">
+            A track record of providing IT support, system administration, and web solutions.
+          </p>
         </div>
-      </motion.div>
-  
+
+        {/* Timeline Wrapper */}
+        <div className="relative w-full">
+          {/* Vertical Center Line for Desktop */}
+          {!isMobile && (
+            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary via-secondary to-accent rounded-full opacity-60 z-0" />
+          )}
+
+          {/* Cards List */}
+          <div className="flex flex-col gap-10 md:gap-14">
+            {(experiences as ExperienceItem[]).map((exp, index) => {
+              const isLeft = index % 2 === 0;
+
+              return (
+                <div
+                  key={index}
+                  className={`relative flex flex-col md:flex-row items-center w-full ${
+                    isMobile
+                      ? "justify-center"
+                      : isLeft
+                      ? "md:justify-start"
+                      : "md:justify-end"
+                  }`}
+                >
+                  {/* Timeline Center Node (Desktop) */}
+                  {!isMobile && (
+                    <motion.div
+                      className="absolute left-1/2 transform -translate-x-1/2 w-10 h-10 rounded-full bg-base-100 border-4 border-primary shadow-lg flex items-center justify-center text-primary z-10"
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ type: "spring", stiffness: 300, delay: index * 0.15 }}
+                    >
+                      <FaBriefcase className="w-4 h-4" />
+                    </motion.div>
+                  )}
+
+                  {/* Experience Card */}
+                  <motion.div
+                    className={`w-full md:w-[46%] group ${
+                      isMobile ? "max-w-xl" : ""
+                    }`}
+                    initial={{ opacity: 0, x: isMobile ? 0 : isLeft ? -50 : 50, y: isMobile ? 30 : 0 }}
+                    whileInView={{ opacity: 1, x: 0, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{
+                      duration: 0.5,
+                      delay: index * 0.15,
+                      type: "spring",
+                      stiffness: 100,
+                    }}
+                  >
+                    <div className="relative bg-base-100 rounded-2xl shadow-lg hover:shadow-2xl border border-base-300/80 hover:border-primary/50 transition-all duration-300 overflow-hidden transform hover:-translate-y-1.5">
+                      {/* Top Gradient Accent Bar */}
+                      <div className="h-1.5 w-full bg-gradient-to-r from-primary via-secondary to-accent group-hover:h-2 transition-all duration-300" />
+
+                      <div className="p-6 md:p-7 space-y-4">
+                        {/* Header: Year Badge & Location */}
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20 shadow-sm">
+                            <FaCalendarAlt className="text-[11px]" />
+                            {exp.year}
+                          </span>
+                          {exp.location && (
+                            <span className="inline-flex items-center gap-1 text-xs font-semibold text-base-content/70">
+                              <FaMapMarkerAlt className="text-primary text-xs" />
+                              {exp.location}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Role & Company Title */}
+                        <div>
+                          <h3 className="text-lg sm:text-xl font-bold text-primary group-hover:text-primary transition-colors">
+                            {exp.role}
+                          </h3>
+                          <div className="flex items-center gap-2 mt-1 text-sm md:text-base font-semibold text-secondary">
+                            <FaBuilding className="text-xs shrink-0" />
+                            <span>{exp.company}</span>
+                          </div>
+                        </div>
+
+                        {/* Responsibilities & Achievements */}
+                        <ul className="space-y-2.5 text-sm md:text-base text-base-content/85 pt-1">
+                          {exp.details.map((detail, i) => (
+                            <li key={i} className="flex items-start gap-2.5 leading-relaxed">
+                              <span className="w-2 h-2 rounded-full bg-primary/80 mt-2 shrink-0 group-hover:scale-125 group-hover:bg-primary transition-transform" />
+                              <span>{detail}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        {/* Tech & Competency Tags */}
+                        {exp.skills && exp.skills.length > 0 && (
+                          <div className="pt-4 border-t border-base-300/60">
+                            <div className="flex flex-wrap gap-1.5">
+                              {exp.skills.map((skill, sIndex) => (
+                                <span
+                                  key={sIndex}
+                                  className="px-2.5 py-1 text-xs font-medium rounded-md bg-base-200/80 text-base-content/75 border border-base-300 hover:border-primary/40 hover:text-primary hover:bg-base-200 transition-colors"
+                                >
+                                  {skill}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
       {/* Divider */}
-      <div className="flex w-full flex-col ">
-        <div className="divider"></div>
+      <div className="flex w-full flex-col mt-16">
+        <div className="divider my-0"></div>
       </div>
     </div>
   );
-  
 };
 
 export default Experience;

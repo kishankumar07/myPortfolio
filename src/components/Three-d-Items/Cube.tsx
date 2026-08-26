@@ -33,11 +33,11 @@ const Cube: FC<CubeProps> = ({ position, scale }) => {
         ease: "elastic.out(1, 0.75)" // Elastic easing for smooth bounce effect
       });
 
-      // Smooth color transition (gentle transition between colors)
+      // Rich, vibrant blue color shift
       gsap.to((ref.current.material as THREE.MeshStandardMaterial).color, {
-        r: 0.5,
-        g: 0.7,
-        b: 1, // Soft blue color shift
+        r: 0.05,
+        g: 0.55,
+        b: 0.95,
         duration: 3,
         repeat: -1,
         yoyo: true,
@@ -49,7 +49,7 @@ const Cube: FC<CubeProps> = ({ position, scale }) => {
   return (
     <mesh ref={ref} position={position} scale={[scale, scale, scale]}>
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color="skyblue" />
+      <meshStandardMaterial color="#0284c7" roughness={0.25} metalness={0.2} />
     </mesh>
   );
 };

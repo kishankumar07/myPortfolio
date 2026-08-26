@@ -81,6 +81,7 @@ const experiences = [
     company: "Just Right Middle East FZCO",
     location: "Dubai, UAE",
     role: "IT Specialist & Web Developer",
+    // skills: ["Microsoft 365", "Windows 11", "Odoo ERP", "Network & Wi-Fi", "Web Management", "AI Automation"],
     details: [
           "Provide end-user IT support for Windows systems, Microsoft 365, Outlook, hardware, software, printers, Wi-Fi and network connectivity.",
           "Manage Microsoft 365 user accounts, email configuration, access permissions, employee onboarding and day-to-day user administration.",
@@ -92,7 +93,9 @@ const experiences = [
   {
     year: "Oct 2023 - Dec 2024",
     company: "Brototype",
+    location: "Kerala, India",
     role: "Full Stack Developer",
+    // skills: ["React.js", "Node.js", "Express.js", "MongoDB", "REST APIs", "TypeScript"],
     details: [
           "Develop and deploy full-stack MERN applications with efficient backend services.",
           "Create and maintain comprehensive API documentation for seamless integration.",
@@ -103,7 +106,9 @@ const experiences = [
   {
     year: "Dec 2021 - Oct 2023",
     company: "Reliance Industries Ltd.",
+    location: "India",
     role: "Telecom Engineer",
+    // skills: ["Fiber Networks", "Infrastructure Deployment", "Team Coordination", "Quality & Safety"],
     details: [
           "Led the construction and deployment of fiber networks across multiple FSA regions.",
           "Coordinated cross-functional teams to ensure on-time project delivery and RFS conversion.",
@@ -114,7 +119,9 @@ const experiences = [
   {
     year: "Nov 2020 - Dec 2021",
     company: "Sharewealth Securities Ltd.",
+    location: "India",
     role: "IT Support Executive",
+    // skills: ["IT Support", "Outlook Configuration", "Client Training", "Troubleshooting"],
     details: [
           "Provided remote and onsite IT support, ensuring timely resolution of technical issues.",
           "Configured and troubleshot Microsoft Outlook for seamless email communication.",

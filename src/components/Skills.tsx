@@ -3,9 +3,10 @@ import {
   FaWindows, FaTools, FaLaptop, FaEnvelope, FaPrint, FaHeadset, 
   FaMicrosoft, FaIdBadge, FaUserShield, FaSitemap, FaServer, 
   FaNetworkWired, FaGlobe, FaRoute, FaProjectDiagram, FaWifi, FaShieldAlt, 
-  FaBoxes, FaHandshake, FaFileAlt, FaTicketAlt, FaCode 
+  FaBoxes, FaHandshake, FaFileAlt, FaTicketAlt, FaCode, FaRobot,
+  FaReact, FaNodeJs, FaPython, FaJs
 } from "react-icons/fa";
-import { SiOdoo, SiVirtualbox } from "react-icons/si";
+import { SiOdoo, SiVirtualbox, SiNextdotjs, SiMongodb, SiPostgresql, SiAdobephotoshop, SiAdobeillustrator } from "react-icons/si";
 
 const skillCategories = [
   {
@@ -44,12 +45,27 @@ const skillCategories = [
   {
     title: "IT OPERATIONS & BUSINESS SYSTEMS",
     skills: [
+      { name: "AI Tools & Automation (Claude / ChatGPT)", icon: FaRobot },
       { name: "Odoo ERP Support", icon: SiOdoo },
       { name: "IT Asset Management", icon: FaBoxes },
       { name: "Vendor Coordination", icon: FaHandshake },
       { name: "IT Documentation", icon: FaFileAlt },
       { name: "ITSM & Ticket Management", icon: FaTicketAlt },
-      { name: "Web Development & Website Management", icon: FaCode },
+    ]
+  },
+  {
+    title: "WEB DEVELOPMENT, SCRIPTING & DESIGN",
+    skills: [
+      { name: "JavaScript", icon: FaJs },
+      { name: "React.js", icon: FaReact },
+      { name: "Next.js", icon: SiNextdotjs },
+      { name: "Node.js", icon: FaNodeJs },
+      { name: "Python", icon: FaPython },
+      { name: "PostgreSQL", icon: SiPostgresql },
+      { name: "MongoDB", icon: SiMongodb },
+      { name: "Website Management", icon: FaCode },
+      { name: "Adobe Photoshop", icon: SiAdobephotoshop },
+      { name: "Adobe Illustrator", icon: SiAdobeillustrator },
     ]
   }
 ];
@@ -75,10 +91,10 @@ const Skills = () => {
           <motion.div className="text-base-content max-w-3xl text-center md:text-left px-4 md:px-8">
             <div className="text-base md:text-lg lg:text-xl font-medium tracking-wide leading-relaxed space-y-6">
     <p>
-      Hi, I’m Kishan, an IT Support Specialist and Web Developer based in Dubai, UAE, with over 2 years of experience across IT support, and web technologies. I currently support business operations through Microsoft 365 administration, Windows support, network troubleshooting, IT asset management, vendor coordination, and hands-on experience working with Odoo ERP systems for business process support and implementation assistance.
+      Hi, I’m Kishan, an IT Support Specialist and Web Developer based in Dubai, UAE, with over 2 years of experience across IT support, systems administration, and web development. I support business operations through Microsoft 365 administration, Windows support, network troubleshooting, IT asset management, vendor coordination, and hands-on experience with Odoo ERP systems.
     </p>
     <p>
-      My focus is on keeping users productive, systems reliable, and everyday technology running smoothly. Alongside my core IT responsibilities, I bring experience in web development and continue to strengthen my knowledge of Active Directory, Windows Server, virtualization, and cloud technologies.
+      Alongside core IT support, I help companies manage and develop their digital web presence using JavaScript, React, Next.js, Node.js, Python, PostgreSQL, and MongoDB, with practical design experience in Adobe Photoshop and Illustrator for digital and web assets. I also actively leverage modern AI tools like Claude and ChatGPT to streamline daily IT workflows, automate routine scripts, and accelerate technical troubleshooting.
     </p>
   </div>
 </motion.div>

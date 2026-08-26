@@ -8,21 +8,140 @@ Title: Hacker Room - Stylized
 
 // import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { Mesh } from 'three'
-
-
+import { Mesh, MeshStandardMaterial, CanvasTexture, SRGBColorSpace } from 'three'
 import { GroupProps } from '@react-three/fiber';
+import { useEffect, useMemo } from 'react';
 
 export default function ComputerTable(props: GroupProps) {
   const { nodes, materials } = useGLTF('/models/hacker_room.glb')
+
+  // Create crisp custom screen texture displaying Kishan's portfolio hero page
+  const screenTexture = useMemo(() => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1024;
+    canvas.height = 1024;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+
+    // Background - Deep Tech Glass Terminal
+    ctx.fillStyle = '#090d16';
+    ctx.fillRect(0, 0, 1024, 1024);
+
+    // Subtle scanline pattern for CRT texture
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.02)';
+    for (let i = 0; i < 1024; i += 8) {
+      ctx.fillRect(0, i, 1024, 4);
+    }
+
+    // Top Window Header Bar
+    ctx.fillStyle = '#111827';
+    ctx.fillRect(0, 0, 1024, 90);
+
+    // Mac/Linux terminal control buttons
+    ctx.fillStyle = '#ef4444';
+    ctx.beginPath();
+    ctx.arc(50, 45, 14, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#f59e0b';
+    ctx.beginPath();
+    ctx.arc(95, 45, 14, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#10b981';
+    ctx.beginPath();
+    ctx.arc(140, 45, 14, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Window Title
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = 'bold 28px monospace';
+    ctx.fillText('kishan-portfolio ~ hero-page', 210, 55);
+
+    // Inner Glass Card
+    ctx.fillStyle = '#0f172a';
+    ctx.fillRect(40, 120, 944, 860);
+
+    // Hero Greeting Heading
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = 'bold 54px sans-serif';
+    ctx.fillText("👋 Hello, I'm Kishan", 85, 215);
+
+    // Professional Headline
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = 'bold 36px sans-serif';
+    ctx.fillText('IT Support Specialist', 85, 290);
+    ctx.fillStyle = '#a855f7';
+    ctx.font = 'bold 32px sans-serif';
+    ctx.fillText('Microsoft 365 | Windows & Network', 85, 340);
+
+    // Supporting Description
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '26px sans-serif';
+    ctx.fillText('Supporting users, systems & business operations', 85, 415);
+    ctx.fillText('through reliable IT solutions & troubleshooting.', 85, 455);
+
+    // Location Badge
+    ctx.fillStyle = '#1e293b';
+    ctx.fillRect(85, 510, 360, 56);
+    ctx.fillStyle = '#10b981';
+    ctx.beginPath();
+    ctx.arc(118, 538, 9, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = 'bold 24px monospace';
+    ctx.fillText('Based in Dubai, UAE', 145, 546);
+
+    // Divider Line
+    ctx.strokeStyle = '#334155';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(85, 610);
+    ctx.lineTo(939, 610);
+    ctx.stroke();
+
+    // Live Terminal Output lines
+    ctx.fillStyle = '#4ade80';
+    ctx.font = 'bold 28px monospace';
+    ctx.fillText('> System: Active & Online [OK]', 85, 675);
+    ctx.fillText('> Support Status: All Systems Operational', 85, 730);
+    ctx.fillText('> Microsoft 365 / Network: Connected', 85, 785);
+    ctx.fillStyle = '#facc15';
+    ctx.fillText('> Welcome to my interactive portfolio! _ █', 85, 840);
+
+    const texture = new CanvasTexture(canvas);
+    texture.colorSpace = SRGBColorSpace;
+    texture.flipY = false;
+    return texture;
+  }, []);
+
+  useEffect(() => {
+    // Enhance computer casing brightness & contrast
+    if (materials.computer_mat) {
+      const compMat = materials.computer_mat as MeshStandardMaterial;
+      compMat.roughness = 0.45;
+      compMat.metalness = 0.05;
+    }
+    // Enhance wood desk finish
+    if (materials.table_mat) {
+      const tableMat = materials.table_mat as MeshStandardMaterial;
+      tableMat.roughness = 0.55;
+    }
+    // Enhance server and props finish
+    if (materials.server_mat) {
+      const serverMat = materials.server_mat as MeshStandardMaterial;
+      serverMat.roughness = 0.5;
+    }
+  }, [materials]);
+
   return (
     <group {...props} dispose={null}>
       <mesh
-  castShadow
-  receiveShadow
-  geometry={(nodes.computer_computer_mat_0 as Mesh).geometry}
-  material={materials.computer_mat}
-/>
+        castShadow
+        receiveShadow
+        geometry={(nodes.computer_computer_mat_0 as Mesh).geometry}
+        material={materials.computer_mat}
+      />
       <mesh
         castShadow
         receiveShadow
@@ -81,19 +200,14 @@ export default function ComputerTable(props: GroupProps) {
         castShadow
         receiveShadow
         geometry={(nodes.screen_screens_0 as Mesh).geometry}
-        material={materials.screens}
-      />
+      >
+        {screenTexture && <meshBasicMaterial map={screenTexture} toneMapped={false} />}
+      </mesh>
       <mesh
         castShadow
         receiveShadow
         geometry={(nodes.screen_glass_glass_0 as Mesh).geometry}
         material={materials.glass}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={(nodes.Ground_ground_mat_0 as Mesh).geometry}
-        material={materials.ground_mat}
       />
       <mesh
         castShadow

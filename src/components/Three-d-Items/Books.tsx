@@ -1,20 +1,35 @@
 import { useGLTF } from '@react-three/drei';
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as THREE from 'three';
 
 interface BooksProps {
-
   scale: number;
-
   position: number[];
-
   rotation: number[];
-
 }
-
 
 const Books: React.FC<BooksProps> = (props) => {
   const { nodes, materials } = useGLTF('/models/books.glb');
+
+  useEffect(() => {
+    // Lighten open book pages for clear contrast in light theme
+    if (materials.Open_book_Mat) {
+      const mat = materials.Open_book_Mat as THREE.MeshStandardMaterial;
+      mat.roughness = 0.45;
+      mat.metalness = 0.05;
+      mat.toneMapped = true;
+    }
+    // Enhance magnifier glass and brass trim
+    if (materials.Magnifier) {
+      const magMat = materials.Magnifier as THREE.MeshStandardMaterial;
+      magMat.roughness = 0.2;
+      magMat.metalness = 0.6;
+    }
+    // Enhance stacked leather books
+    if (materials.Book_1_Mat) (materials.Book_1_Mat as THREE.MeshStandardMaterial).roughness = 0.5;
+    if (materials.Book_2_Mat) (materials.Book_2_Mat as THREE.MeshStandardMaterial).roughness = 0.5;
+    if (materials.Book_3_Mat) (materials.Book_3_Mat as THREE.MeshStandardMaterial).roughness = 0.5;
+  }, [materials]);
 
   return (
     <group 
