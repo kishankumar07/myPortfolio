@@ -5,17 +5,17 @@
 /* One technology artwork, blended against the selected theme's plain base. */
 .portfolio-page { position: relative; isolation: isolate; min-height: 100svh; }
 .portfolio-page::before { content: ''; position: fixed; inset: 0; z-index: -2; pointer-events: none; background: oklch(var(--b2)); }
-.portfolio-tech-backdrop { position: fixed; inset: 0; z-index: -1; pointer-events: none; user-select: none; background: url('/backgrounds/it-context.webp') center / cover no-repeat; opacity: .32; filter: invert(1) hue-rotate(180deg) saturate(.65); mask-image: linear-gradient(to right, transparent 32%, #000 72%); transition: opacity .35s ease; }
-:root[data-background-tone='dark'] .portfolio-tech-backdrop { opacity: .5; filter: none; }
-@media (max-width: 768px) { .portfolio-tech-backdrop { opacity: .16; background-position: 70% center; mask-image: linear-gradient(to bottom, transparent 40%, #000 85%); } :root[data-background-tone='dark'] .portfolio-tech-backdrop { opacity: .24; } }
+.portfolio-tech-backdrop { position: fixed; inset: 0; z-index: -1; pointer-events: none; user-select: none; background: url('/backgrounds/it-context.webp') center / cover no-repeat; opacity: .18; filter: invert(1) hue-rotate(180deg) saturate(.65); mask-image: linear-gradient(to right, transparent 32%, #000 72%); transition: opacity .35s ease; }
+:root[data-background-tone='dark'] .portfolio-tech-backdrop { opacity: .3; filter: none; }
+@media (max-width: 768px) { .portfolio-tech-backdrop { opacity: .1; background-position: 70% center; mask-image: linear-gradient(to bottom, transparent 40%, #000 85%); } :root[data-background-tone='dark'] .portfolio-tech-backdrop { opacity: .16; } }
 @media (prefers-reduced-motion: reduce) { .portfolio-tech-backdrop { transition: none; } }
 /* Only section backdrops become transparent; cards, inputs and controls keep their surfaces. */
 .portfolio-page > .floating-hero { background-color: transparent; }
-.portfolio-page > #about, .portfolio-page > #experience, .portfolio-page > #education, .portfolio-page > #contact { background-color: oklch(var(--b1) / .28); }
+.portfolio-page > #about, .portfolio-page > #experience, .portfolio-page > #education, .portfolio-page > #contact { background-color: oklch(var(--b1) / .8); }
 :root[data-background-tone='dark'] .portfolio-page > #about,
 :root[data-background-tone='dark'] .portfolio-page > #experience,
 :root[data-background-tone='dark'] .portfolio-page > #education,
-:root[data-background-tone='dark'] .portfolio-page > #contact { background-color: oklch(var(--b1) / .58); }
+:root[data-background-tone='dark'] .portfolio-page > #contact { background-color: oklch(var(--b1) / .84); }
 .portfolio-page > nav { background-color: oklch(var(--b1) / .94); }
 .portfolio-page > footer { background-color: oklch(var(--b1) / .72); }
 .portfolio-page .floating-hero-copy { background: none; }
