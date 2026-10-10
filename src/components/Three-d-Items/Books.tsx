@@ -1,3 +1,4 @@
+import { useMediaQuery } from 'react-responsive';
 import { useGLTF } from '@react-three/drei';
 import React, { useEffect } from 'react';
 import * as THREE from 'three';
@@ -9,7 +10,8 @@ interface BooksProps {
 }
 
 const Books: React.FC<BooksProps> = (props) => {
-  const { nodes, materials } = useGLTF('/models/books.glb');
+  const mobile = useMediaQuery({ query: '(max-width: 768px), (pointer: coarse)' });
+  const { nodes, materials } = useGLTF(mobile ? '/models/books_mobile.glb' : '/models/books.glb');
 
   useEffect(() => {
     // Lighten open book pages for clear contrast in light theme
@@ -89,6 +91,5 @@ const Books: React.FC<BooksProps> = (props) => {
   );
 }
 
-useGLTF.preload('/models/books.glb');
 
 export default Books;

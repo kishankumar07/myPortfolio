@@ -1,4 +1,5 @@
-import { Canvas } from "@react-three/fiber";
+import FitScene from './FitScene';
+import SceneCanvas from "./SceneCanvas";
 import "animate.css";
 import { Suspense, useMemo } from "react";
 import { OrbitControls, Float, ContactShadows } from "@react-three/drei";
@@ -12,6 +13,7 @@ import MaskedDiamond from "./Three-d-Items/MaskedDiamond";
 import Snowflake from "./Three-d-Items/Snowflake";
 
 const Hero = () => {
+  const touch = useMediaQuery({ query: "(pointer: coarse)" });
   // Responsive Media Queries
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1024 });
@@ -79,9 +81,6 @@ const Hero = () => {
     [isMobile, isTablet]
   );
 
-  // Camera settings calibrated for complete downward isometric perspective with generous margins
-  const cameraZ = isMobile ? 245 : isTablet ? 230 : 215;
-  const cameraY = isMobile ? 65 : 58;
 
   return (
     <>
@@ -132,7 +131,7 @@ const Hero = () => {
               <a
                 className="btn btn-primary rounded-xl px-6 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 font-semibold"
                 aria-label="Download My CV"
-                href="https://drive.google.com/file/d/10jXLjYNFC2b4K-vd9pFRr-JCP0W3g7Rx/view?usp=sharing"
+                href="https://drive.google.com/file/d/1BRfx67jYoOU7bQ8CVbRpZFOJuXcePbqB/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -152,8 +151,8 @@ const Hero = () => {
           </div>
 
           {/* Right: 3D Canvas Showcase */}
-          <div className="w-full lg:w-1/2 flex items-center justify-center relative">
-            <div className="relative w-full h-[380px] sm:h-[440px] md:h-[500px] lg:h-[540px] xl:h-[600px] max-w-full cursor-grab active:cursor-grabbing">
+          <div className="w-full min-w-0 lg:w-1/2 flex items-center justify-center relative">
+            <div className="relative isolate overflow-hidden w-full h-[380px] sm:h-[440px] md:h-[500px] lg:h-[540px] xl:h-[600px] max-w-full cursor-grab active:cursor-grabbing">
               <Suspense
                 fallback={
                   <div className="flex flex-col items-center justify-center h-full gap-3">
@@ -162,8 +161,8 @@ const Hero = () => {
                   </div>
                 }
               >
-                <Canvas
-                  dpr={[1, 2]}
+                <SceneCanvas
+
                   gl={{
                     antialias: true,
                     alpha: true,
@@ -171,7 +170,7 @@ const Hero = () => {
                     toneMappingExposure: 1.2,
                   }}
                   camera={{
-                    position: [0, cameraY, cameraZ],
+                    position: [0, 85, 235],
                     fov: 46,
                     near: 0.1,
                     far: 1000,
@@ -234,6 +233,7 @@ const Hero = () => {
                   />
 
                   {/* Dynamic Floating 3D Scene */}
+                  <FitScene margin={1.12}>
                   <Float
                     speed={1.4}
                     rotationIntensity={0.05}
@@ -246,9 +246,12 @@ const Hero = () => {
                     {MemoizedReactLogo}
                     {MemoizedSnowflake}
                   </Float>
+                  </FitScene>
 
                   {/* Realistic Soft Floor Contact Shadows */}
                   <ContactShadows
+                    frames={1}
+                    resolution={256}
                     position={[0, -51, 0]}
                     opacity={0.45}
                     scale={240}
@@ -258,16 +261,16 @@ const Hero = () => {
                   />
 
                   {/* Smooth Interactive Camera Controls targeted at the desk center */}
-                  <OrbitControls
+                  {!touch && <OrbitControls
+                    makeDefault
                     enableZoom={false}
                     enablePan={false}
-                    target={[0, -20, 0]}
                     maxPolarAngle={Math.PI / 2 - 0.05}
                     minPolarAngle={Math.PI / 6}
                     enableDamping={true}
                     dampingFactor={0.06}
-                  />
-                </Canvas>
+                  />}
+                </SceneCanvas>
               </Suspense>
             </div>
           </div>

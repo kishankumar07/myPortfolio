@@ -1,4 +1,5 @@
-import { useRef, useMemo } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import { useRef, useMemo, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Float, OrbitControls, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
@@ -167,6 +168,7 @@ const FlagPin = ({
 };
 
 const EarthMesh = () => {
+  const mobile = useMediaQuery({ query: "(max-width: 768px), (pointer: coarse)" });
   const earthRef = useRef<THREE.Mesh>(null);
   const cloudsRef = useRef<THREE.Mesh>(null);
 
@@ -178,6 +180,11 @@ const EarthMesh = () => {
 
   const uaeFlagTexture = useMemo(() => createUAEFlagTexture(), []);
   const indiaFlagTexture = useMemo(() => createIndiaFlagTexture(), []);
+
+  useEffect(() => () => {
+    uaeFlagTexture.dispose();
+    indiaFlagTexture.dispose();
+  }, [uaeFlagTexture, indiaFlagTexture]);
 
   // 1. UAE (Dubai): 25.2048° N, 55.2708° E
   const { uaePos, uaeQuat } = useMemo(() => {
@@ -200,19 +207,19 @@ const EarthMesh = () => {
   useFrame((_, delta) => {
     // Planetary rotation
     if (earthRef.current) {
-      earthRef.current.rotation.y += delta * 0.12;
+      earthRef.current.rotation.y += Math.min(delta, .05) * 0.12;
     }
     // Atmospheric clouds parallax rotation
     if (cloudsRef.current) {
-      cloudsRef.current.rotation.y += delta * 0.16;
+      cloudsRef.current.rotation.y += Math.min(delta, .05) * 0.16;
     }
   });
 
   return (
-    <group dispose={null}>
+    <group>
       {/* 1. Photorealistic NASA Blue Marble Earth Sphere */}
       <mesh ref={earthRef} castShadow receiveShadow>
-        <sphereGeometry args={[2, 64, 64]} />
+        <sphereGeometry args={[2, mobile ? 32 : 48, mobile ? 24 : 32]} />
         <meshStandardMaterial
           map={earthTexture}
           roughness={0.65}
@@ -232,7 +239,7 @@ const EarthMesh = () => {
 
       {/* 2. Real Cloud Layer with Parallax Rotation */}
       <mesh ref={cloudsRef} scale={1.015}>
-        <sphereGeometry args={[2, 64, 64]} />
+        <sphereGeometry args={[2, mobile ? 32 : 48, mobile ? 24 : 32]} />
         <meshStandardMaterial
           map={cloudsTexture}
           transparent
@@ -258,19 +265,20 @@ const EarthMesh = () => {
 };
 
 const Globe = () => {
+  const touch = useMediaQuery({ query: "(pointer: coarse)" });
   return (
     <group scale={0.82}>
       <Float speed={1.2} rotationIntensity={0.06} floatIntensity={0.12}>
         <EarthMesh />
       </Float>
 
-      <OrbitControls
+      {!touch && <OrbitControls
         enableZoom={false}
         enablePan={false}
         enableDamping={true}
         dampingFactor={0.06}
         rotateSpeed={0.8}
-      />
+      />}
     </group>
   );
 };

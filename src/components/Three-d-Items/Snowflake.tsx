@@ -1,41 +1,24 @@
 import { useGLTF } from '@react-three/drei'
-import { gsap } from 'gsap'
-import { useRef, useEffect } from 'react'
+import { useFrame } from '@react-three/fiber';
+import { useRef } from 'react'
 import * as THREE from 'three'
+import { useMediaQuery } from 'react-responsive'
 
 const Snowflake = (props: JSX.IntrinsicElements['group']) => {
-  const { nodes, materials } = useGLTF('/models/spiral_snowflakes.glb')
+  const mobile = useMediaQuery({ query: '(max-width: 768px), (pointer: coarse)' })
+  const { nodes, materials } = useGLTF(mobile ? '/models/spiral_snowflakes_mobile.glb' : '/models/spiral_snowflakes.glb')
   const coneRef = useRef<THREE.Mesh>(null)
 
-  useEffect(() => {
+  const time = useRef(0);
+  useFrame((_, delta) => {
+    const step = Math.min(delta, .05);
+    time.current += step;
     if (coneRef.current) {
-      // Continuous rotation on Y-axis (spinning like a top)
-      gsap.to(coneRef.current.rotation, {
-        y: '+=6.28', // Full rotation on Y-axis
-        repeat: -1,  // Infinite loop
-        duration: 6, // Increased duration for slower rotation
-        ease: 'none' // Smooth, consistent rotation
-      })
-
-      // Tilting motion on X-axis (wobbling effect)
-      gsap.to(coneRef.current.rotation, {
-        x: '+=0.5',    // Tilt forward
-        duration: 3,   // Increased duration for slower wobble
-        repeat: -1,    // Infinite loop
-        yoyo: true,    // Back and forth motion
-        ease: 'sine.inOut', // Smooth easing for a wobble effect
-      })
-
-      // Optional: Slight tilt on Z-axis for a more dynamic motion
-      gsap.to(coneRef.current.rotation, {
-        z: '+=0.3',    // Slight wobble sideways
-        duration: 3,   // Matches the X-axis wobble duration
-        repeat: -1,    // Infinite loop
-        yoyo: true,    // Back and forth motion
-        ease: 'sine.inOut',
-      })
+      coneRef.current.rotation.y += step * Math.PI / 3;
+      coneRef.current.rotation.x = Math.PI + .25 * (1 - Math.cos(time.current * Math.PI / 3));
+      coneRef.current.rotation.z = .15 * (1 - Math.cos(time.current * Math.PI / 3));
     }
-  }, [])
+  });
 
   return (
     <group {...props} dispose={null}>
@@ -52,6 +35,5 @@ const Snowflake = (props: JSX.IntrinsicElements['group']) => {
   )
 }
 
-useGLTF.preload('/models/spiral_snowflakes.glb')
 
 export default Snowflake

@@ -3,7 +3,7 @@ import { useMediaQuery } from 'react-responsive';
 import emailjs from '@emailjs/browser';
 import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
-import { Canvas } from '@react-three/fiber';
+import SceneCanvas from './SceneCanvas';
 import * as THREE from 'three';
 import { FaLock } from 'react-icons/fa6';
 
@@ -116,8 +116,8 @@ const ContactMe = () => {
                   </div>
                 }
               >
-                <Canvas
-                  dpr={[1, 2]}
+                <SceneCanvas
+
                   gl={{
                     antialias: true,
                     alpha: true,
@@ -139,7 +139,7 @@ const ContactMe = () => {
                   <hemisphereLight color="#ffffff" groundColor="#0284c7" intensity={0.9} />
 
                   <Globe />
-                </Canvas>
+                </SceneCanvas>
               </Suspense>
             </div>
             <p className="text-xs text-base-content/60 font-mono tracking-wide mt-2 text-center select-none">

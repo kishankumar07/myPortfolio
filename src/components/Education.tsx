@@ -1,7 +1,8 @@
+import FitScene from './FitScene';
 import { motion } from 'framer-motion';
 import { Suspense, lazy } from 'react';
 import { OrbitControls, Float, ContactShadows } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
+import SceneCanvas from './SceneCanvas';
 import { useMediaQuery } from 'react-responsive';
 import * as THREE from 'three';
 import { FaGraduationCap, FaUniversity, FaSchool, FaCalendarAlt, FaMapMarkerAlt, FaAward } from 'react-icons/fa';
@@ -9,6 +10,7 @@ import { FaGraduationCap, FaUniversity, FaSchool, FaCalendarAlt, FaMapMarkerAlt,
 const Books = lazy(() => import('./Three-d-Items/Books')); // Lazy load Books component
 
 const Education = () => {
+  const touch = useMediaQuery({ query: "(pointer: coarse)" });
   const isSmall = useMediaQuery({ maxWidth: 440 });
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1024 });
@@ -47,8 +49,8 @@ const Education = () => {
 
         <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-12">
           {/* 3D Model Showcase */}
-          <div className="w-full lg:w-1/2 flex items-center justify-center">
-            <div className="relative w-full h-[320px] sm:h-[380px] md:h-[420px] lg:h-[480px] max-w-lg cursor-grab active:cursor-grabbing">
+          <div className="w-full min-w-0 lg:w-1/2 flex items-center justify-center">
+            <div className="relative isolate overflow-hidden w-full h-[320px] sm:h-[380px] md:h-[420px] lg:h-[480px] max-w-lg cursor-grab active:cursor-grabbing">
               <Suspense
                 fallback={
                   <div className="flex flex-col items-center justify-center h-full gap-3">
@@ -57,8 +59,8 @@ const Education = () => {
                   </div>
                 }
               >
-                <Canvas
-                  dpr={[1, 2]}
+                <SceneCanvas
+
                   gl={{
                     antialias: true,
                     alpha: true,
@@ -105,6 +107,7 @@ const Education = () => {
                   />
 
                   {/* Gentle Hover Animation */}
+                  <FitScene margin={1.06}>
                   <Float
                     speed={1.4}
                     rotationIntensity={0.05}
@@ -113,9 +116,12 @@ const Education = () => {
                   >
                     <Books {...modelProps} />
                   </Float>
+                  </FitScene>
 
                   {/* Soft Floor Contact Shadow */}
                   <ContactShadows
+                    frames={1}
+                    resolution={256}
                     position={[0, -1.0, 0]}
                     opacity={0.3}
                     scale={12}
@@ -124,16 +130,16 @@ const Education = () => {
                     color="#0f172a"
                   />
 
-                  <OrbitControls
+                  {!touch && <OrbitControls
+                    makeDefault
                     enableZoom={false}
                     enablePan={false}
-                    target={[0, 0.1, 0]}
                     maxPolarAngle={Math.PI / 2 - 0.05}
                     minPolarAngle={Math.PI / 6}
                     enableDamping={true}
                     dampingFactor={0.06}
-                  />
-                </Canvas>
+                  />}
+                </SceneCanvas>
               </Suspense>
             </div>
           </div>

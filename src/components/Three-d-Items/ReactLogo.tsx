@@ -1,6 +1,6 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { useGLTF } from '@react-three/drei';
-import { gsap } from 'gsap';
+import { useFrame } from '@react-three/fiber';
 import * as THREE from "three"
 
 interface ReactLogoProps {
@@ -12,28 +12,16 @@ const ReactLogo = ({ position, scale }: ReactLogoProps) => {
   const { nodes, materials } = useGLTF('/models/react_logo.glb');
   const ref = useRef<THREE.Group>(null);
 
-  // GSAP animation for scale and rotation
-  useEffect(() => {
+  // Share the canvas loop so offscreen motion does not consume CPU.
+  const time = useRef(0);
+  useFrame((_, delta) => {
+    const step = Math.min(delta, .05);
+    time.current += step;
     if (ref.current) {
-      gsap.to(ref.current.scale, {
-        x: 1.5,
-        y: 1.5,
-        z: 1.5,
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: "power2.inOut"
-      });
-
-      gsap.to(ref.current.rotation, {
-        y: Math.PI * 2,
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: "power2.inOut"
-      });
+      ref.current.rotation.y = Math.PI * (1 - Math.cos(time.current * Math.PI / 2));
+      ref.current.scale.setScalar(1.25 - .25 * Math.cos(time.current * Math.PI / 2));
     }
-  }, []);
+  });
 
   return (
     <group ref={ref} position={position}>
@@ -52,6 +40,5 @@ const ReactLogo = ({ position, scale }: ReactLogoProps) => {
   );
 };
 
-useGLTF.preload('/models/react_logo.glb');
 
 export default ReactLogo;
