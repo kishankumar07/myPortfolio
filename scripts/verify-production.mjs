@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+const html = await readFile('dist/index.html','utf8');
+assert.equal((html.match(/<h1\b/g)||[]).length,1,'Exactly one primary heading');
+assert.match(html,/<main\b/,'Main landmark');
+assert.match(html,/<meta name="description" content=".{60,}"/,'Search description');
+assert.match(html,/<link rel="canonical" href="https:\/\/www\.kishanta\.in\/"/,'Canonical URL');
+for (const content of ['Hello, I','Professional Experience','Bachelor of Technology','Full Name','contact-message']) assert.ok(html.includes(content),`Prerendered content: ${content}`);
+const schema = JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);
+assert.equal(schema['@type'],'ProfilePage');
+assert.equal(schema.mainEntity['@type'],'Person');
+assert.match(await readFile('dist/robots.txt','utf8'),/Sitemap: https:\/\/www\.kishanta\.in\/sitemap.xml/);
+assert.match(await readFile('dist/sitemap.xml','utf8'),/<loc>https:\/\/www\.kishanta\.in\/<\/loc>/);
+assert.ok(html.includes('htmlFor') === false,'Valid HTML labels');
+console.log('Production checks pass: prerendered content, headings, metadata, schema, robots and sitemap.');

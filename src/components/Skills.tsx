@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import {
@@ -268,6 +268,17 @@ const categoryFilters = [
 ] as const;
 
 const Skills = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState(false);
+  const [pageVisible, setPageVisible] = useState(true);
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting));
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    const update = () => setPageVisible(!document.hidden);
+    update();
+    document.addEventListener("visibilitychange", update);
+    return () => { observer.disconnect(); document.removeEventListener("visibilitychange", update); };
+  }, []);
   const shouldReduceMotion = useReducedMotion();
   const isMobile = useMediaQuery({ maxWidth: 640 });
   const isTablet = useMediaQuery({ minWidth: 641, maxWidth: 1024 });
@@ -302,12 +313,12 @@ const Skills = () => {
 
   // Auto-play timer (pauses when hovered or user explicitly pauses)
   useEffect(() => {
-    if (!isAutoPlaying || isHovered || viewMode !== "orbital") return;
+    if (!isAutoPlaying || isHovered || viewMode !== "orbital" || !visible || !pageVisible || shouldReduceMotion) return;
     const interval = setInterval(() => {
       handleNext();
     }, 4000);
     return () => clearInterval(interval);
-  }, [isAutoPlaying, isHovered, viewMode, handleNext]);
+  }, [isAutoPlaying, isHovered, viewMode, handleNext, visible, pageVisible, shouldReduceMotion]);
 
   // Orbital dimensions based on responsive breakpoint
   const radiusX = isMobile ? 140 : isTablet ? 200 : 255;
@@ -324,7 +335,7 @@ const Skills = () => {
           aria-hidden="true"
         >
           <img
-            src="/datacenter-bg.png"
+            src="/backgrounds/datacenter.webp" loading="lazy" decoding="async"
             alt=""
             className="w-full h-full object-cover object-center opacity-[0.045] dark:opacity-[0.07] filter grayscale contrast-125 [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_82%)]"
           />
@@ -339,36 +350,18 @@ const Skills = () => {
             About Me
           </h2>
 
-          {/* Two-Column Responsive Layout */}
-          <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-10 lg:gap-14">
-            {/* Left Column: Profile Photo */}
+          {/* Symmetrical Two-Column Responsive Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-center max-w-5xl mx-auto">
+            {/* Left Column (Desktop): Symmetrically balanced About Content */}
             <motion.div
-              initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.96 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="shrink-0 flex justify-center w-full lg:w-auto"
-            >
-              <div className="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-full p-1.5 bg-base-100 shadow-xl border border-base-300 ring-2 ring-primary/20 transition-all duration-300 hover:ring-primary/40">
-                <img
-                  src="https://res.cloudinary.com/da2gbgkqj/image/upload/v1786948883/2_poyxcp.png"
-                  alt="Kishan - IT Support Specialist and Web Developer"
-                  className="w-full h-full object-cover rounded-full shadow-inner"
-                  loading="lazy"
-                />
-              </div>
-            </motion.div>
-
-            {/* Right Column: About Content */}
-            <motion.div
-              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="w-full max-w-2xl text-base-content"
+              transition={{ duration: 0.5 }}
+              className="order-2 lg:order-1 w-full max-w-xl text-base-content flex flex-col justify-center text-left"
             >
               {/* Clean, readable paragraphs without inner highlights */}
-              <div className="space-y-4 md:space-y-5 text-base md:text-lg text-base-content/80 leading-relaxed font-normal text-left">
+              <div className="space-y-4 md:space-y-5 text-base md:text-lg text-base-content/85 leading-relaxed font-normal text-left">
                 <p>
                   Hi, I'm Kishan, an IT Support Specialist and Web Developer based in Dubai, UAE. I work at the intersection of IT operations, business systems, and web technologies, helping businesses maintain reliable IT environments and improve their digital workflows.
                 </p>
@@ -381,16 +374,42 @@ const Skills = () => {
                   I am passionate about solving technical challenges, exploring emerging technologies, and finding smarter ways to work through automation and AI. I focus on turning complex technical problems into practical, reliable solutions that make everyday business operations easier.
                 </p>
               </div>
+            </motion.div>
 
-              {/* Core Technology Badges */}
-             
+            {/* Right Column (Desktop): Kishan's Half-Body Pose looking toward content */}
+            <motion.div
+              initial={false}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="order-1 lg:order-2 flex justify-center lg:justify-center w-full"
+            >
+              <div className="relative group flex items-center justify-center">
+                {/* Decorative Warm Accent Backdrop matching uploaded design */}
+                <div
+                  className="absolute -right-3 -top-3 w-56 h-56 sm:w-72 sm:h-72 bg-gradient-to-br from-amber-400/20 via-primary/15 to-transparent dark:from-primary/25 dark:via-secondary/15 dark:to-transparent rounded-full blur-2xl -z-10 pointer-events-none"
+                  aria-hidden="true"
+                />
+
+                {/* Half-body portrait container showing full torso & shoulders */}
+                <div className="relative w-64 sm:w-72 md:w-80 lg:w-[350px] xl:w-[380px] flex items-center justify-center">
+                  <img
+                    src="/kishan-pose-cutout.png"
+                    alt="Kishan - IT Support Specialist and Web Developer"
+                    className="w-full h-auto object-contain filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.30)] [mask-image:linear-gradient(to_bottom,black_86%,transparent_100%)] select-none pointer-events-none transition-transform duration-500 group-hover:scale-[1.01]"
+                    loading="lazy"
+                    width={380}
+                    height={424}
+                  />
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Skills Section - Animated Orbital Showcase */}
-      <section id="skills" className="skills-section max-w-6xl mx-auto" aria-labelledby="skills-heading">
+      <section ref={sectionRef} id="skills" className="skills-section max-w-6xl mx-auto" aria-labelledby="skills-heading">
         {/* Section Header */}
         <div className="text-center mb-10 md:mb-12 space-y-3">
           <h2
@@ -554,7 +573,7 @@ const Skills = () => {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeSkill.id}
-                  initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 15, scale: 0.96 }}
+                  initial={false}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -15, scale: 0.96 }}
                   transition={{ duration: 0.3 }}

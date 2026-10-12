@@ -207,11 +207,11 @@ const EarthMesh = () => {
   useFrame((_, delta) => {
     // Planetary rotation
     if (earthRef.current) {
-      earthRef.current.rotation.y += Math.min(delta, .05) * 0.12;
+      earthRef.current.rotation.y += Math.min(delta, .05) * 0.07;
     }
     // Atmospheric clouds parallax rotation
     if (cloudsRef.current) {
-      cloudsRef.current.rotation.y += Math.min(delta, .05) * 0.16;
+      cloudsRef.current.rotation.y += Math.min(delta, .05) * 0.09;
     }
   });
 

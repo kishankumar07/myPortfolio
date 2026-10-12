@@ -83,14 +83,7 @@ const Footer = () => {
         {/* Dynamic Animated "Back to Top" Pill */}
         <motion.button
           onClick={scrollToTop}
-          animate={{
-            y: [0, -6, 0],
-          }}
-          transition={{
-            repeat: Infinity,
-            duration: 2.6,
-            ease: "easeInOut",
-          }}
+
           whileHover={{
             scale: 1.08,
             y: -8,
@@ -104,8 +97,7 @@ const Footer = () => {
 
           {/* Animated Pulsing Home Icon */}
           <motion.div
-            animate={{ scale: [1, 1.18, 1] }}
-            transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+
           >
             <FaHouse className="w-4 h-4 text-primary group-hover:text-primary-content transition-colors duration-300" />
           </motion.div>

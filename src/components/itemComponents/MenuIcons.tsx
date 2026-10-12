@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NAV_LINKS } from "../../utils/constants";
-import { Link } from "react-scroll";
+
 
 
 // Menu icon on small screen's hamburger and cross icon
@@ -10,6 +10,9 @@ const MenuIcon = () => {
   return (
     <div className="relative">
       <button
+        aria-label={isMenuOpen ? "Close navigation" : "Open navigation"}
+        aria-expanded={isMenuOpen}
+        aria-controls="mobile-navigation"
         onClick={() => setIsMenuOpen((prev) => !prev)}
         className="text-primary-focus focus:outline-none"
       >
@@ -37,19 +40,18 @@ const MenuIcon = () => {
       </button>
 
       {isMenuOpen && (
-  <div className="absolute top-12 left-0 -ml-20 w-32 bg-base-100 z-50  rounded-xl">
+  <div id="mobile-navigation" className="absolute top-12 right-0 w-44 bg-base-100 z-50  rounded-xl">
     <div className="w-full flex justify-center  ">
       <div className="flex flex-col items-center space-y-4   w-full sm:max-w-xs md:max-w-md lg:max-w-lg ">
         {NAV_LINKS.map((link, index) => (
-          <Link
+          <a
             key={index}
-            to={link.toLowerCase()}
-            smooth={true}
-            duration={500}
+            href={`#${link.toLowerCase()}`}
+            onClick={() => setIsMenuOpen(false)}
             className="text-base-content text-sm sm:text-base md:text-lg font-medium transition-all duration-500 ease-in-out bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary px-2 sm:px-4 py-2 rounded-md text-center cursor-pointer"
           >
             {link}
-          </Link>
+          </a>
         ))}
       </div>
     </div>

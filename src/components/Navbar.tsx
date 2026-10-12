@@ -12,7 +12,8 @@ const Navbar = () => {
 
   // Load saved theme or set default
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "light";
+    let savedTheme = "light";
+    try { const stored = localStorage.getItem("theme"); if (stored && themes.includes(stored)) savedTheme = stored; } catch { /* Theme selection remains available when storage is blocked. */ }
     document.documentElement.setAttribute("data-theme", savedTheme);
     setCurrentTheme(savedTheme);
   }, []);
@@ -20,7 +21,7 @@ const Navbar = () => {
   // Handle selecting a specific theme
   const selectTheme = (themeName: string) => {
     document.documentElement.setAttribute("data-theme", themeName);
-    localStorage.setItem("theme", themeName);
+    try { localStorage.setItem("theme", themeName); } catch { /* Keep applying the theme for this visit. */ }
     setCurrentTheme(themeName);
   };
 

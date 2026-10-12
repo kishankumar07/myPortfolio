@@ -1,32 +1,16 @@
-import FitScene from './FitScene';
+import DeferredScene from './DeferredScene';
+
 import { motion } from 'framer-motion';
 import { Suspense, lazy } from 'react';
-import { OrbitControls, Float, ContactShadows } from '@react-three/drei';
-import SceneCanvas from './SceneCanvas';
-import { useMediaQuery } from 'react-responsive';
-import * as THREE from 'three';
+
+
+
+
 import { FaGraduationCap, FaUniversity, FaSchool, FaCalendarAlt, FaMapMarkerAlt, FaAward } from 'react-icons/fa';
 
-const Books = lazy(() => import('./Three-d-Items/Books')); // Lazy load Books component
+const EducationScene = lazy(() => import('./EducationScene'));
 
 const Education = () => {
-  const touch = useMediaQuery({ query: "(pointer: coarse)" });
-  const isSmall = useMediaQuery({ maxWidth: 440 });
-  const isMobile = useMediaQuery({ maxWidth: 768 });
-  const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1024 });
-
-  // Set 3D model properties dynamically based on screen size (properly scaled with full visibility)
-  const modelProps = {
-    scale: isSmall ? 13 : isMobile ? 14.5 : isTablet ? 16 : 18,
-    position: isSmall
-      ? [0, -0.35, 0]
-      : isMobile
-      ? [0, -0.35, 0]
-      : isTablet
-      ? [0, -0.4, 0]
-      : [0, -0.45, 0],
-    rotation: [0, -Math.PI, 0],
-  };
 
   return (
     <div id="education" className="education-section bg-base-200 py-16 px-4 md:px-8 overflow-hidden">
@@ -34,7 +18,7 @@ const Education = () => {
         {/* Education Heading */}
         <div className="text-center mb-12 space-y-3">
           <motion.h2
-            initial={{ opacity: 0, y: -30 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
@@ -59,94 +43,14 @@ const Education = () => {
                   </div>
                 }
               >
-                <SceneCanvas
-
-                  gl={{
-                    antialias: true,
-                    alpha: true,
-                    toneMapping: THREE.ACESFilmicToneMapping,
-                    toneMappingExposure: 1.25,
-                  }}
-                  camera={{
-                    position: [0, 3.6, 9.8],
-                    fov: isMobile ? 42 : 38,
-                    near: 0.1,
-                    far: 1000,
-                  }}
-                >
-                  {/* Multi-Point Studio Lighting for Bright Open Book Definition */}
-                  <ambientLight intensity={1.3} />
-
-                  {/* Key Directional Sun Light */}
-                  <directionalLight
-                    position={[10, 18, 12]}
-                    intensity={2.2}
-                    castShadow
-                  />
-
-                  {/* Soft Fill Light from Left */}
-                  <directionalLight
-                    position={[-12, 14, 10]}
-                    intensity={1.3}
-                    color="#dbeafe"
-                  />
-
-                  {/* Top Spotlight on Open Pages */}
-                  <pointLight
-                    position={[0, 12, 8]}
-                    intensity={1.4}
-                    distance={60}
-                    color="#fffbeb"
-                  />
-
-                  {/* Ground Bounce Light */}
-                  <hemisphereLight
-                    color="#ffffff"
-                    groundColor="#cbd5e1"
-                    intensity={0.9}
-                  />
-
-                  {/* Gentle Hover Animation */}
-                  <FitScene margin={1.06}>
-                  <Float
-                    speed={1.4}
-                    rotationIntensity={0.05}
-                    floatIntensity={0.12}
-                    floatingRange={[-0.08, 0.08]}
-                  >
-                    <Books {...modelProps} />
-                  </Float>
-                  </FitScene>
-
-                  {/* Soft Floor Contact Shadow */}
-                  <ContactShadows
-                    frames={1}
-                    resolution={256}
-                    position={[0, -1.0, 0]}
-                    opacity={0.3}
-                    scale={12}
-                    blur={2.4}
-                    far={8}
-                    color="#0f172a"
-                  />
-
-                  {!touch && <OrbitControls
-                    makeDefault
-                    enableZoom={false}
-                    enablePan={false}
-                    maxPolarAngle={Math.PI / 2 - 0.05}
-                    minPolarAngle={Math.PI / 6}
-                    enableDamping={true}
-                    dampingFactor={0.06}
-                  />}
-                </SceneCanvas>
+<DeferredScene kind="books"><EducationScene /></DeferredScene>
               </Suspense>
             </div>
           </div>
 
           {/* Education Content Cards */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
+            initial={false}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}

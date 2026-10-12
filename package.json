@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/prerender.mjs && node scripts/verify-production.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -40,7 +40,8 @@
     "tailwindcss": "^3.4.17",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.18.2",
-    "vite": "^6.0.5"
+    "vite": "^6.0.5",
+    "esbuild": "^0.24.2"
   },
   "overrides": {
     "three-mesh-bvh": "^0.8.0"

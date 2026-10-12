@@ -26,3 +26,4 @@ dist-ssr
 *.sw?
 
 .codegpt
+scripts/.prerender-app.mjs

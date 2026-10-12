@@ -1,14 +1,15 @@
+import DeferredScene from './DeferredScene';
 import { useState, Suspense, lazy } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import emailjs from '@emailjs/browser';
 import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
-import SceneCanvas from './SceneCanvas';
-import * as THREE from 'three';
+
+
 import { FaLock } from 'react-icons/fa6';
 
 // 3D Earth Globe component
-const Globe = lazy(() => import('./Three-d-Items/Globe'));
+const ContactGlobeScene = lazy(() => import('./ContactGlobeScene'));
 
 const ContactMe = () => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -63,7 +64,12 @@ const ContactMe = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
     if (validateForm()) {
+      if (!import.meta.env.VITE_EMAILJS_SERVICE_ID || !import.meta.env.VITE_EMAILJS_TEMPLATE_ID || !import.meta.env.VITE_EMAILJS_PUBLIC_KEY) {
+        toast.error("The contact form is temporarily unavailable. Please connect through my LinkedIn profile.");
+        return;
+      }
       setIsSubmitting(true);
       emailjs
         .send(
@@ -86,28 +92,28 @@ const ContactMe = () => {
   };
 
   return (
-    <div id="contact" className="bg-base-200 py-16 px-4 md:px-8 overflow-hidden">
-      <motion.h1
-        initial={{ opacity: 0, y: -20 }}
+    <div id="contact" className="contact-showcase bg-base-200 py-16 px-4 md:px-8 overflow-hidden">
+      <motion.h2
+        initial={false}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
         className="text-center text-primary font-bold text-3xl md:text-4xl xl:text-5xl mb-12"
       >
         Contact me
-      </motion.h1>
+      </motion.h2>
 
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* 3D Interactive Rotating Globe */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={false}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="lg:col-span-5 flex flex-col items-center justify-center"
+            className="contact-globe-column lg:col-span-6 lg:order-2 flex flex-col items-center justify-center"
           >
-            <div className="w-full h-[340px] sm:h-[380px] md:h-[420px] lg:h-[450px] cursor-grab active:cursor-grabbing relative flex items-center justify-center">
+            <div className="contact-globe-stage w-full cursor-grab active:cursor-grabbing relative flex items-center justify-center">
               <Suspense
                 fallback={
                   <div className="flex flex-col items-center justify-center h-full gap-3">
@@ -116,30 +122,7 @@ const ContactMe = () => {
                   </div>
                 }
               >
-                <SceneCanvas
-
-                  gl={{
-                    antialias: true,
-                    alpha: true,
-                    toneMapping: THREE.ACESFilmicToneMapping,
-                    toneMappingExposure: 1.25,
-                  }}
-                  camera={{
-                    position: [0, 0.2, 5.5],
-                    fov: isMobile ? 48 : 42,
-                    near: 0.1,
-                    far: 1000,
-                  }}
-                >
-                  {/* Studio lighting for bright, crisp Earth view */}
-                  <ambientLight intensity={1.4} />
-                  <directionalLight position={[10, 14, 12]} intensity={2.4} castShadow />
-                  <directionalLight position={[-10, 8, 8]} intensity={1.2} color="#bae6fd" />
-                  <pointLight position={[0, 6, 6]} intensity={1.2} color="#ffffff" />
-                  <hemisphereLight color="#ffffff" groundColor="#0284c7" intensity={0.9} />
-
-                  <Globe />
-                </SceneCanvas>
+<DeferredScene><ContactGlobeScene /></DeferredScene>
               </Suspense>
             </div>
             <p className="text-xs text-base-content/60 font-mono tracking-wide mt-2 text-center select-none">
@@ -149,11 +132,11 @@ const ContactMe = () => {
 
           {/* Browser Window Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={false}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="lg:col-span-7 w-full"
+            className="contact-form-column lg:col-span-6 lg:order-1 w-full"
           >
             {isMobile ? (
               <div className="flex justify-center items-center py-2">
@@ -169,11 +152,14 @@ const ContactMe = () => {
                     <form className="w-full max-w-xs space-y-4" onSubmit={handleSubmit}>
                       {/* Full Name */}
                       <div className="form-control">
-                        <label className="label py-1">
+                        <label htmlFor="contact-from_name" className="label py-1">
                           <span className="label-text font-medium text-base-content">Full Name</span>
                         </label>
                         <input
                           type="text"
+                          id="contact-from_name"
+                          autoComplete="name"
+                          aria-required="true"
                           name="from_name"
                           placeholder="Enter your full name"
                           className={`input input-bordered w-full bg-base-100 ${
@@ -189,11 +175,14 @@ const ContactMe = () => {
 
                       {/* Email Address */}
                       <div className="form-control">
-                        <label className="label py-1">
+                        <label htmlFor="contact-reply_to" className="label py-1">
                           <span className="label-text font-medium text-base-content">Email Address</span>
                         </label>
                         <input
                           type="email"
+                          id="contact-reply_to"
+                          autoComplete="email"
+                          aria-required="true"
                           name="reply_to"
                           placeholder="Enter your email address"
                           className={`input input-bordered w-full bg-base-100 ${
@@ -209,10 +198,12 @@ const ContactMe = () => {
 
                       {/* Your Message */}
                       <div className="form-control">
-                        <label className="label py-1">
+                        <label htmlFor="contact-message" className="label py-1">
                           <span className="label-text font-medium text-base-content">Your Message</span>
                         </label>
                         <textarea
+                          id="contact-message"
+                          aria-required="true"
                           name="message"
                           placeholder="Write your message here..."
                           className={`textarea textarea-bordered w-full bg-base-100 ${
@@ -270,12 +261,15 @@ const ContactMe = () => {
                   <form className="w-full max-w-lg space-y-4" onSubmit={handleSubmit}>
                     {/* Full Name */}
                     <div className="form-control">
-                      <label className="label py-1">
+                      <label htmlFor="contact-from_name" className="label py-1">
                         <span className="label-text font-medium text-base-content">Full Name</span>
                       </label>
                       <input
                         type="text"
-                        name="from_name"
+                        id="contact-from_name"
+                          autoComplete="name"
+                          aria-required="true"
+                          name="from_name"
                         placeholder="Enter your full name"
                         className={`input input-bordered w-full bg-base-100 ${
                           errors.from_name ? 'input-error' : ''
@@ -290,12 +284,15 @@ const ContactMe = () => {
 
                     {/* Email Address */}
                     <div className="form-control">
-                      <label className="label py-1">
+                      <label htmlFor="contact-reply_to" className="label py-1">
                         <span className="label-text font-medium text-base-content">Email Address</span>
                       </label>
                       <input
                         type="email"
-                        name="reply_to"
+                        id="contact-reply_to"
+                          autoComplete="email"
+                          aria-required="true"
+                          name="reply_to"
                         placeholder="Enter your email address"
                         className={`input input-bordered w-full bg-base-100 ${
                           errors.reply_to ? 'input-error' : ''
@@ -310,11 +307,13 @@ const ContactMe = () => {
 
                     {/* Your Message */}
                     <div className="form-control">
-                      <label className="label py-1">
+                      <label htmlFor="contact-message" className="label py-1">
                         <span className="label-text font-medium text-base-content">Your Message</span>
                       </label>
                       <textarea
-                        name="message"
+                        id="contact-message"
+                          aria-required="true"
+                          name="message"
                         placeholder="Write your message here..."
                         className={`textarea textarea-bordered w-full bg-base-100 ${
                           errors.message ? 'textarea-error' : ''

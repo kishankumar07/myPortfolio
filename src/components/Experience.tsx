@@ -41,7 +41,7 @@ const Experience = () => {
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 25 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5 }}
@@ -126,7 +126,7 @@ const Experience = () => {
                           ? "bg-secondary text-secondary-content ring-4 ring-secondary/25 scale-110"
                           : "bg-base-100 border-2 border-primary/50 text-primary"
                       }`}
-                      initial={{ scale: 0, opacity: 0 }}
+                      initial={false}
                       whileInView={{ scale: 1, opacity: 1 }}
                       viewport={{ once: true, margin: "-40px" }}
                       transition={
@@ -157,10 +157,7 @@ const Experience = () => {
                     className={`w-full md:w-[46%] ${
                       isMobile ? "pl-12" : ""
                     }`}
-                    initial={{
-                      opacity: 0,
-                      x: shouldReduceMotion ? 0 : isMobile ? 25 : isLeft ? -45 : 45,
-                    }}
+                    initial={false}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: "-60px" }}
                     transition={

@@ -14,15 +14,18 @@ import TechBackground from './components/TechBackground'
 const App = () => {
   return (
     <div className="portfolio-page">
+      <a href="#main-content" className="skip-link">Skip to content</a>
       <TechBackground />
       <Navbar/>    
       <ToastContainer/>  
+      <main id="main-content">
       <Hero/>
       <Skills/>
       
       <Experience/>
       <Education/>
       <ContactMe/>
+      </main>
       <Footer/>
     </div>
   )
