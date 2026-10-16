@@ -1,3 +1,6 @@
+import SectionHeading from './SectionHeading';
+import useEducationReveal from './useEducationReveal';
+import './EducationReveal.css';
 import DeferredScene from './DeferredScene';
 
 import { motion } from 'framer-motion';
@@ -11,29 +14,22 @@ import { FaGraduationCap, FaUniversity, FaSchool, FaCalendarAlt, FaMapMarkerAlt,
 const EducationScene = lazy(() => import('./EducationScene'));
 
 const Education = () => {
+  const educationRevealRef = useEducationReveal();
 
   return (
-    <div id="education" className="education-section bg-base-200 py-16 px-4 md:px-8 overflow-hidden">
+    <div ref={educationRevealRef} id="education" className="education-section bg-base-200 py-16 px-4 md:px-8 overflow-hidden">
       <div className="max-w-6xl mx-auto">
         {/* Education Heading */}
         <div className="text-center mb-12 space-y-3">
-          <motion.h2
-            initial={false}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-3xl md:text-4xl xl:text-5xl font-extrabold text-primary"
-          >
-            Education
-          </motion.h2>
+          <SectionHeading>Education</SectionHeading>
           <p className="text-base sm:text-lg text-base-content/75 max-w-xl mx-auto">
             Building the technical foundation behind my career in IT and technology.
-          </p>
+          </p><button type="button" className="education-replay" aria-label="Replay education animation" onClick={() => educationRevealRef.current?.dispatchEvent(new Event('education-replay'))}>Replay animation <span aria-hidden="true">↻</span></button>
         </div>
 
         <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-12">
           {/* 3D Model Showcase */}
-          <div className="w-full min-w-0 lg:w-1/2 flex items-center justify-center">
+          <div className="education-books-entrance w-full min-w-0 lg:w-1/2 flex items-center justify-center">
             <div className="relative isolate overflow-hidden w-full h-[320px] sm:h-[380px] md:h-[420px] lg:h-[480px] max-w-lg cursor-grab active:cursor-grabbing">
               <Suspense
                 fallback={
@@ -54,10 +50,11 @@ const Education = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="w-full lg:w-1/2 space-y-6"
+            className="education-reveal-list w-full lg:w-1/2"
           >
+            
             {/* Degree Card: Bachelor of Technology */}
-            <motion.div
+            <div className="education-reveal-item"><motion.div
               whileHover={{ y: -4 }}
               transition={{ duration: 0.3 }}
               className="group relative bg-base-100/90 backdrop-blur-md rounded-2xl border border-base-300/80 hover:border-primary/50 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden"
@@ -65,7 +62,7 @@ const Education = () => {
               {/* Top Gradient Accent Bar */}
               <div className="h-1 w-full bg-gradient-to-r from-primary via-secondary to-accent"></div>
 
-              <div className="p-6 sm:p-7 space-y-5">
+              <div className="education-reveal-content p-6 sm:p-7 space-y-5">
                 {/* Header Row */}
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/20 via-primary/10 to-transparent border border-primary/25 text-primary flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 transition-transform duration-300">
@@ -120,10 +117,10 @@ const Education = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </motion.div><div className="education-connection" aria-hidden="true"><span className="education-connection-fill" /></div></div>
 
             {/* Schooling Card: St. Jude Public School */}
-            <motion.div
+            <div className="education-reveal-item"><motion.div
               whileHover={{ y: -4 }}
               transition={{ duration: 0.3 }}
               className="group relative bg-base-100/90 backdrop-blur-md rounded-2xl border border-base-300/80 hover:border-primary/50 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden"
@@ -131,7 +128,7 @@ const Education = () => {
               {/* Top Gradient Accent Bar */}
               <div className="h-1 w-full bg-gradient-to-r from-secondary via-accent to-primary"></div>
 
-              <div className="p-6 sm:p-7 space-y-5">
+              <div className="education-reveal-content p-6 sm:p-7 space-y-5">
                 {/* Header Row */}
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-secondary/20 via-secondary/10 to-transparent border border-secondary/25 text-secondary flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 transition-transform duration-300">
@@ -180,7 +177,7 @@ const Education = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </motion.div></div>
           </motion.div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NAV_LINKS } from "../../utils/constants";
 
 
@@ -6,15 +6,22 @@ import { NAV_LINKS } from "../../utils/constants";
 // Menu icon on small screen's hamburger and cross icon
 const MenuIcon = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') { setIsMenuOpen(false); menuButton.current?.focus(); } };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [isMenuOpen]);
 
   return (
     <div className="relative">
-      <button
+      <button ref={menuButton}
         aria-label={isMenuOpen ? "Close navigation" : "Open navigation"}
         aria-expanded={isMenuOpen}
-        aria-controls="mobile-navigation"
+        aria-controls={isMenuOpen ? "mobile-navigation" : undefined}
         onClick={() => setIsMenuOpen((prev) => !prev)}
-        className="text-primary-focus focus:outline-none"
+        className="text-primary-focus min-w-11 min-h-11 inline-flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
       >
         {isMenuOpen ? (
           <svg

@@ -1,3 +1,4 @@
+import SectionHeading from './SectionHeading';
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import { projects } from "../utils/constants";
@@ -26,9 +27,7 @@ const Projects = () => {
     id={`projects`}
     className="projects-section bg-base-200 p-6"
   >
-    <h2 className="text-3xl md:text-4xl xl:text-5xl text-primary font-bold text-center mb-8">
-      My Projects
-    </h2>
+    <SectionHeading className="text-center mb-8">My Projects</SectionHeading>
     <div
       className={`grid ${gridCols} gap-6`}
       style={{

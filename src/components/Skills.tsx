@@ -1,3 +1,6 @@
+import SectionHeading from './SectionHeading';
+import { RevealWords } from './AboutScrollReveal';
+import { useAboutScrollReveal } from './useAboutScrollReveal';
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
@@ -267,7 +270,7 @@ const categoryFilters = [
   { id: "web", label: "Web & Scripting" },
 ] as const;
 
-const Skills = () => {
+const Skills = () => { const aboutRevealRef = useAboutScrollReveal();
   const sectionRef = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
   const [pageVisible, setPageVisible] = useState(true);
@@ -328,96 +331,41 @@ const Skills = () => {
   return (
     <div id="about" className="about-and-skills py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-8 bg-base-200 overflow-hidden">
       {/* About Me Section */}
-      <section className="about-me-section relative max-w-6xl mx-auto mb-20 md:mb-28" aria-labelledby="about-heading">
-        {/* Subtle, Low-Visibility Datacenter Watermark Background */}
-        <div
-          className="absolute inset-0 -mx-4 sm:-mx-8 lg:-mx-12 -my-6 pointer-events-none select-none overflow-hidden z-0"
-          aria-hidden="true"
-        >
-          <img
-            src="/backgrounds/datacenter.webp" loading="lazy" decoding="async"
-            alt=""
-            className="w-full h-full object-cover object-center opacity-[0.045] dark:opacity-[0.07] filter grayscale contrast-125 [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_82%)]"
-          />
-        </div>
-
-        <div className="relative z-10">
-          {/* Section Header */}
-          <h2
-            id="about-heading"
-            className="text-3xl md:text-4xl xl:text-5xl font-bold text-center text-primary mb-10 md:mb-14"
-          >
-            About Me
-          </h2>
-
-          {/* Symmetrical Two-Column Responsive Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-center max-w-5xl mx-auto">
-            {/* Left Column (Desktop): Symmetrically balanced About Content */}
-            <motion.div
-              initial={false}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="order-2 lg:order-1 w-full max-w-xl text-base-content flex flex-col justify-center text-left"
-            >
-              {/* Clean, readable paragraphs without inner highlights */}
-              <div className="space-y-4 md:space-y-5 text-base md:text-lg text-base-content/85 leading-relaxed font-normal text-left">
-                <p>
-                  Hi, I'm Kishan, an IT Support Specialist and Web Developer based in Dubai, UAE. I work at the intersection of IT operations, business systems, and web technologies, helping businesses maintain reliable IT environments and improve their digital workflows.
-                </p>
-
-                <p>
-                  My experience spans Microsoft 365 administration, Windows support, network troubleshooting, IT infrastructure, and Odoo ERP systems. Alongside IT support, I build and maintain modern web applications using React, Next.js, Node.js, and TypeScript.
-                </p>
-
-                <p>
-                  I am passionate about solving technical challenges, exploring emerging technologies, and finding smarter ways to work through automation and AI. I focus on turning complex technical problems into practical, reliable solutions that make everyday business operations easier.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Right Column (Desktop): Kishan's Half-Body Pose looking toward content */}
-            <motion.div
-              initial={false}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="order-1 lg:order-2 flex justify-center lg:justify-center w-full"
-            >
-              <div className="relative group flex items-center justify-center">
-                {/* Decorative Warm Accent Backdrop matching uploaded design */}
-                <div
-                  className="absolute -right-3 -top-3 w-56 h-56 sm:w-72 sm:h-72 bg-gradient-to-br from-amber-400/20 via-primary/15 to-transparent dark:from-primary/25 dark:via-secondary/15 dark:to-transparent rounded-full blur-2xl -z-10 pointer-events-none"
-                  aria-hidden="true"
-                />
-
-                {/* Half-body portrait container showing full torso & shoulders */}
-                <div className="relative w-64 sm:w-72 md:w-80 lg:w-[350px] xl:w-[380px] flex items-center justify-center">
-                  <img
-                    src="/kishan-pose-cutout.png"
-                    alt="Kishan - IT Support Specialist and Web Developer"
-                    className="w-full h-auto object-contain filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.30)] [mask-image:linear-gradient(to_bottom,black_86%,transparent_100%)] select-none pointer-events-none transition-transform duration-500 group-hover:scale-[1.01]"
-                    loading="lazy"
-                    width={380}
-                    height={424}
-                  />
-                </div>
-              </div>
-            </motion.div>
+      <section ref={aboutRevealRef} className="about-me-section about-editorial max-w-6xl mx-auto mb-20 md:mb-28" aria-labelledby="about-heading">
+        <header className="about-editorial-heading">
+          <span className="about-eyebrow">THE PERSON BEHIND THE WORK</span>
+          <SectionHeading id="about-heading">About Me</SectionHeading>
+        </header>
+        <div className="about-intro-grid">
+          <div className="about-intro-copy">
+            <span className="about-eyebrow">A PRACTICAL MINDSET. A CURIOUS SPIRIT.</span>
+            <RevealWords className="about-lead" text="I like understanding how things work, then finding ways to make them work better." emphasize="how things work," />
+            <RevealWords className="about-description" text="My path has taken me through user support, telecom infrastructure, and full-stack development. That mix helps me see both the technical details and the people who depend on them." />
+            <a className="about-contact-link" href="#contact">Let’s connect <span aria-hidden="true">↗︎</span></a>
           </div>
+          <figure className="about-portrait-panel">
+            <div className="about-portrait-orbit" aria-hidden="true" />
+            <span className="about-portrait-monogram" aria-hidden="true">K.</span>
+            <img src="/kishan-pose-cutout.png" alt="Kishan - IT Support Specialist and Web Developer" loading="lazy" decoding="async" width={380} height={424} />
+            <figcaption><span className="about-location-dot" aria-hidden="true" /> Kishan T A <span className="about-portrait-caption">ALWAYS LEARNING.</span></figcaption>
+          </figure>
+        </div>
+        <div className="about-story-grid">
+          <article className="about-story-card">
+            <div className="about-story-title"><span aria-hidden="true">01 /</span><h3>How I work</h3><FaCode aria-hidden="true" /></div>
+            <p>I start by listening, ask questions to find the root cause, and explain the next steps clearly. Whether I am resolving an issue or building a feature, I aim for a solution that is easy to use, maintain, and hand over.</p>
+          </article>
+          <article className="about-story-card">
+            <div className="about-story-title"><span aria-hidden="true">02 /</span><h3>What drives me</h3><FaCompass aria-hidden="true" /></div>
+            <p>I enjoy the moment a difficult problem starts to make sense. Exploring automation and AI gives me new ways to approach familiar challenges, while building projects keeps me learning through practice.</p>
+          </article>
         </div>
       </section>
-
       {/* Skills Section - Animated Orbital Showcase */}
       <section ref={sectionRef} id="skills" className="skills-section max-w-6xl mx-auto" aria-labelledby="skills-heading">
         {/* Section Header */}
         <div className="text-center mb-10 md:mb-12 space-y-3">
-          <h2
-            id="skills-heading"
-            className="text-3xl md:text-4xl xl:text-5xl font-bold text-primary tracking-tight"
-          >
-            Technical Skills
-          </h2>
+          <SectionHeading id="skills-heading">Technical Skills</SectionHeading>
           <p className="text-base sm:text-lg text-base-content/75 max-w-xl mx-auto">
             Interactive exploration of my multi-disciplinary capabilities across enterprise IT, networking, ERP systems, and web development.
           </p>

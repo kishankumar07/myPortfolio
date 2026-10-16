@@ -1,3 +1,4 @@
+import SectionHeading from './SectionHeading';
 import DeferredScene from './DeferredScene';
 import { useState, Suspense, lazy } from 'react';
 import { useMediaQuery } from 'react-responsive';
@@ -93,15 +94,7 @@ const ContactMe = () => {
 
   return (
     <div id="contact" className="contact-showcase bg-base-200 py-16 px-4 md:px-8 overflow-hidden">
-      <motion.h2
-        initial={false}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="text-center text-primary font-bold text-3xl md:text-4xl xl:text-5xl mb-12"
-      >
-        Contact me
-      </motion.h2>
+      <SectionHeading className="text-center max-w-6xl mx-auto mb-12">Contact Me</SectionHeading>
 
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -144,9 +137,9 @@ const ContactMe = () => {
                   className="mockup-phone bg-base-200 p-5 w-[320px] max-w-full overflow-hidden shadow-2xl border border-base-300"
                 >
                   <div className="camera"></div>
-                  <h2 className="text-xl font-semibold my-4 text-center text-base-content">
+                  <h3 className="contact-form-heading my-4 text-center text-base-content">
                     Let's connect
-                  </h2>
+                  </h3>
 
                   <div className="display flex flex-col items-center px-4 py-2">
                     <form className="w-full max-w-xs space-y-4" onSubmit={handleSubmit}>
@@ -254,9 +247,9 @@ const ContactMe = () => {
                   </div>
                 </div>
                 <div className="bg-base-200 flex flex-col items-center px-6 py-8">
-                  <h2 className="text-2xl sm:text-3xl font-semibold mb-6 text-center text-base-content">
+                  <h3 className="contact-form-heading mb-6 text-center text-base-content">
                     Let's connect
-                  </h2>
+                  </h3>
 
                   <form className="w-full max-w-lg space-y-4" onSubmit={handleSubmit}>
                     {/* Full Name */}

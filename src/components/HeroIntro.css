@@ -1,0 +1,15 @@
+/* A single restrained entrance. The existing planets film stays untouched. */
+.cinema-hero.hero-intro .hero-intro-step { animation:hero-intro-enter .7s cubic-bezier(.22,.68,.2,1) both !important; }
+.cinema-hero.hero-intro .hero-intro-step:nth-child(1) { animation-delay:.05s !important; }
+.cinema-hero.hero-intro .hero-intro-step:nth-child(2) { animation-delay:.16s !important; }
+.cinema-hero.hero-intro .hero-intro-step:nth-child(3) { animation-delay:.25s !important; }
+.cinema-hero.hero-intro .hero-intro-step:nth-child(4) { animation-delay:.33s !important; }
+.cinema-hero.hero-intro .hero-intro-step:nth-child(5) { animation-delay:.4s !important; }
+.cinema-hero.hero-intro .hero-intro-step:nth-child(6) { animation-delay:.48s !important; }
+@keyframes hero-intro-enter { from { opacity:0; transform:translateY(9px); } to { opacity:1; transform:translateY(0); } }
+.hero-intro .cinema-hero-footer { justify-content:space-between; }
+.hero-intro-cue { display:inline-flex; align-items:center; gap:13px; min-height:36px; color:#c9cdd7; font-size:10px; letter-spacing:.04em; }
+.hero-intro-cue::before { content:''; width:25px; height:1px; background:#c9cdd76b; }
+.hero-intro-cue span { color:#f1f3f9; font-size:15px; }
+@media(max-width:900px) { .hero-intro-cue { display:none; }.hero-intro .cinema-hero-footer { justify-content:flex-end; } }
+@media(prefers-reduced-motion:reduce) { .cinema-hero.hero-intro .hero-intro-step { animation:none !important; opacity:1; transform:none; } }

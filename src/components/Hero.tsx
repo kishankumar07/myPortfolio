@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import './HeroIntro.css';
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -58,37 +59,37 @@ export default function Hero() {
   };
 
   return (
-    <section ref={sectionRef} className="cinema-hero" aria-labelledby="hero-title">
+    <section ref={sectionRef} className="cinema-hero hero-intro" aria-labelledby="hero-title">
       <div className="cinema-hero-media" aria-hidden="true">
         <video ref={videoRef} className="cinema-hero-video" muted loop playsInline
           preload="none" poster="/media/hero-poster.jpg"
           onPlay={() => setPaused(false)} onPause={() => setPaused(true)}
           onError={() => setUnavailable(true)}>
-          {mediaReady && <source src="/media/hero-film.mp4" type="video/mp4" />}
+          {mediaReady && <><source src="/media/hero-film-mobile.mp4" media="(max-width: 768px)" type="video/mp4" /><source src="/media/hero-film.mp4" type="video/mp4" /></>}
         </video>
       </div>
       <div className="cinema-hero-shade" aria-hidden="true" />
       <div className="cinema-hero-content">
           <div className="hero-text restored-hero-copy space-y-5 lg:space-y-6">
             {/* Animated Heading */}
-            <h1 id="hero-title" className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-primary flex items-center justify-center lg:justify-start gap-2">
+            <h1 id="hero-title" className="hero-intro-step text-3xl sm:text-4xl md:text-5xl font-extrabold text-primary flex items-center justify-center lg:justify-start gap-2">
               <span className="">
                 Hello, I'm Kishan
               </span>
             </h1>
 
             {/* Professional Headline */}
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-primary leading-snug">
-              IT Support Specialist | Microsoft 365 | Windows & Network Support
+            <h2 className="hero-intro-step text-lg sm:text-xl md:text-2xl font-bold text-primary leading-snug">
+              IT Support Specialist &amp; Web Developer
             </h2>
 
             {/* Supporting Description with balanced typography to eliminate orphan words */}
-            <p className="text-base sm:text-lg text-base-content/85 leading-relaxed [text-wrap:balance] max-w-lg mx-auto lg:mx-0">
-              Supporting users, systems, and business operations through reliable IT solutions, proactive troubleshooting, and secure technology management.
+            <p className="hero-intro-step text-base sm:text-lg text-base-content/85 leading-relaxed [text-wrap:balance] max-w-lg mx-auto lg:mx-0">
+              Keeping teams connected, systems dependable, and ideas moving from concept to the web.
             </p>
 
             {/* Location Line */}
-            <p className="text-sm font-semibold text-primary/80 flex items-center justify-center lg:justify-start gap-1.5 tracking-wide">
+            <p className="hero-intro-step text-sm font-semibold text-primary/80 flex items-center justify-center lg:justify-start gap-1.5 tracking-wide">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
@@ -105,7 +106,7 @@ export default function Hero() {
             </p>
 
             {/* Buttons */}
-            <div className="flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
+            <div className="hero-intro-step flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
               <a
                 className="btn btn-primary rounded-xl px-6 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 font-semibold"
                 aria-label="Download My CV"
@@ -126,7 +127,7 @@ export default function Hero() {
             </div>
 
             {/* Mobile Scroll Cue */}
-            <div className="flex lg:hidden justify-center pt-2 ">
+            <div className="hero-intro-step flex lg:hidden justify-center pt-2 ">
               <a
                 href="#skills"
                 className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary/80 hover:text-primary transition-colors cursor-pointer py-1.5 px-3.5 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm shadow-sm"
@@ -141,7 +142,7 @@ export default function Hero() {
           </div>
 
       </div>
-      <div className="cinema-hero-footer">
+      <div className="cinema-hero-footer"><a className="hero-intro-cue" href="#about">Scroll to explore <span aria-hidden="true">↓</span></a>
         {!unavailable && <button type="button" className="cinema-hero-playback" onClick={toggleVideo} aria-label={paused ? 'Play background video' : 'Pause background video'}>{paused ? <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z" /></svg> : <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3v14H7zm7 0h3v14h-3z" /></svg>}<span>{paused ? 'Play film' : 'Pause film'}</span></button>}
       </div>
     </section>

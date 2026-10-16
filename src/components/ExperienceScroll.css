@@ -1,0 +1,29 @@
+/* Only this section gains a scroll stage; the original cards and theme remain. */
+.exp-scroll-section { overflow:visible !important; }
+.exp-scroll-stage { isolation:isolate; }
+.exp-flight,.exp-chapter,.exp-scroll-guide { display:none; }
+.exp-scroll-stage.is-enhanced { perspective:1200px; }
+.exp-scroll-stage.is-enhanced .exp-scroll-cards { position:absolute; inset:42px 0 0; height:auto; display:block; }
+.exp-scroll-stage.is-enhanced .exp-scroll-row { position:absolute; inset:0; height:100%; align-items:center; transform-origin:50% 50%; will-change:transform,opacity; }
+.exp-scroll-stage.is-enhanced .exp-static-line,.exp-scroll-stage.is-enhanced .exp-static-node { display:none; }
+.exp-scroll-stage.is-enhanced .exp-flight { display:block; position:absolute; inset:50px 0 0; width:100%; height:calc(100% - 60px); pointer-events:none; overflow:visible; z-index:3; }
+.exp-flight-path { fill:none; stroke:oklch(var(--p) / .2); stroke-width:1; stroke-dasharray:3 8; vector-effect:non-scaling-stroke; }
+.exp-flight-trail { fill:none; stroke:oklch(var(--p) / .7); stroke-width:1.5; vector-effect:non-scaling-stroke; }
+.exp-signal-arrow { fill:oklch(var(--p)); stroke:oklch(var(--b1)); stroke-width:1.5; }
+.exp-signal-halo { fill:oklch(var(--p) / .5); }.exp-signal-core { fill:oklch(var(--pc)); }
+.exp-scroll-stage.is-enhanced .exp-scroll-guide { display:flex; justify-content:space-between; align-items:center; gap:20px; padding:0 0 16px; border-bottom:1px solid oklch(var(--bc) / .12); font-size:9px; font-weight:600; letter-spacing:.12em; color:oklch(var(--bc) / .6); }
+.exp-scroll-guide>span:first-child span { display:inline-block; margin-left:10px; color:oklch(var(--p)); }
+.exp-scroll-guide a { letter-spacing:0; text-decoration:underline; text-underline-offset:4px; }
+.exp-scroll-guide a:focus-visible { outline:2px solid oklch(var(--p)); outline-offset:5px; }
+.exp-scroll-stage.is-enhanced .exp-chapter { display:flex; flex-direction:column; position:absolute; top:50%; width:37%; transform:translateY(-50%); pointer-events:none; padding:25px; }
+.exp-chapter-right { right:0; }.exp-chapter-left { left:0; }
+.exp-chapter-number { font-size:clamp(80px,11vw,150px); line-height:1; font-weight:700; letter-spacing:-.08em; color:oklch(var(--p) / .13); }
+.exp-chapter-year { margin-top:18px; font-size:13px; letter-spacing:.03em; color:oklch(var(--p)); font-weight:600; }
+.exp-chapter-company { margin-top:8px; font-size:17px; line-height:1.5; color:oklch(var(--bc) / .72); max-width:250px; }
+.exp-chapter>svg { width:25px; height:25px; color:oklch(var(--p) / .6); margin-top:24px; }
+@media(max-width:799px),(max-height:719px),(prefers-reduced-motion:reduce) { .exp-flight,.exp-chapter,.exp-scroll-guide { display:none !important; } }
+
+@media(min-width:800px) and (max-width:1100px) { .exp-scroll-stage.is-enhanced .exp-scroll-row { justify-content:flex-end; } .exp-scroll-stage.is-enhanced .exp-scroll-row > .w-full { width:80%; } .exp-scroll-stage.is-enhanced .exp-chapter { display:none; } .exp-scroll-stage.is-enhanced .exp-flight { transform:translateX(-42%); } }
+
+/* Keep the 768px touch layout full-width at Tailwind's md boundary. */
+@media(max-width:768px) { .exp-scroll-stage:not(.is-enhanced) .exp-scroll-row > .w-full { width:100%; } }

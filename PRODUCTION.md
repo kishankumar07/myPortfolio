@@ -1,52 +1,63 @@
-# Production readiness — Kishan T A portfolio
+# Production readiness audit — 16 October 2026
 
-Reviewed on 12 October 2026. Changes are saved locally; nothing has been pushed or deployed.
+The current production build was tested locally at http://127.0.0.1:4173/. Nothing has been pushed or deployed.
 
-## Video
+## Outcome
 
-The hero retains the full 60-second, 1280 × 720, 30 fps original. Its encoded video stream matches the source exactly, verified by SHA-256 over the video packets. The MP4 was remuxed for fast start without re-encoding. File size is approximately 21 MB. The source is 720p; this work does not create additional detail or claim 1080p/4K quality.
+No release-blocking issue was found in the tested Chrome flows. This is a local production-build audit, not a guarantee for every browser or physical device.
 
-## Performance changes
+## Fixes made during this audit
 
-- Initial JavaScript reduced from approximately 1,291 KB to 408 KB before transfer compression (68% smaller), or approximately 373 KB to 135 KB gzip.
-- WebGL libraries and 3D illustrations load only when their sections approach the viewport. No canvases exist on initial hero load.
-- Scenes stop rendering offscreen, when the page is hidden, and during mobile scrolling. The hero video pauses offscreen and when the page is hidden.
-- Skills auto-rotation stops offscreen, in hidden tabs and for reduced-motion users.
-- Removed perpetual footer animation and large unused animation styles. CSS is approximately 138 KB before compression.
-- Reused the optimized books model on desktop and mobile, reducing its download from 13.42 MB to 1.66 MB without changing geometry.
-- Converted the about-section background to WebP and deferred decorative image loading.
-- Hero poster is preloaded; the video begins after the first paint rather than holding up the introduction.
-- Added a fallback for unsupported or failed WebGL scenes so the surrounding content and contact form remain usable.
+- Added a mobile-specific version of the existing planets film: 5,791,140 bytes versus the original 21,014,411 bytes (72.4% smaller). It is the same sequence at 640px wide and 24fps, compressed for phone delivery. The original desktop film is unchanged.
+- Verified the mobile browser actually selects `/media/hero-film-mobile.mp4` and decodes it at 640px wide.
+- Fixed the experience card's half-width layout at the 768px breakpoint; it now uses the full mobile timeline width.
+- Increased the mobile navigation button to a 44px touch target, restored a visible keyboard focus indicator, added Escape-to-close with focus return, and removed its dangling aria-controls reference while closed.
+- Expanded `scripts/verify-production.mjs` to check unique IDs, section link targets, language, viewport, social metadata, and the mobile-video size budget.
 
-## SEO and usability
+## SEO and production build
 
-- Production build prerenders the portfolio content into HTML and hydrates it in the browser.
-- Added a search description, canonical URL, ProfilePage/Person structured data, robots.txt and sitemap.xml.
-- Retained the existing canonical domain: https://www.kishanta.in/.
-- Added a main landmark and skip link; kept one H1.
-- Navigation and hero section links use ordinary anchors and work with keyboards and without JavaScript.
-- Mobile navigation has an accessible name and closes after selecting a section.
-- Contact fields have associated labels and autocomplete where applicable.
-- Theme persistence handles blocked browser storage gracefully.
+`npm run build` passes TypeScript, Vite, prerendering and the production verification script.
 
-## Verification
+Verified in the generated HTML: one H1, readable prerendered portfolio content, main landmark, description, canonical URL, English document language, responsive viewport, Open Graph and Twitter metadata, ProfilePage/Person structured data, unique IDs and valid section targets. robots.txt and sitemap.xml reference https://www.kishanta.in/.
 
-- TypeScript, ESLint, production build, prerender and automated SEO checks pass.
-- Tested widths 320, 390, 768, 1024 and 1440 pixels: no horizontal document overflow; one contact form and one H1 at each size; all contact fields labelled.
-- Inspected desktop and phone layouts, education models and the contact globe.
-- Checked skills grid/orbital switching, mobile navigation, theme persistence, video pause/resume, offscreen rendering states and blank-form validation.
-- No browser errors or warnings were recorded in the checked production flows, including dark-theme reload/hydration.
-- EmailJS build variables are present. No real email was sent as part of testing.
-- Existing three-stdlib dependency emits a build-time warning about its lottie module's eval use. Build succeeds.
+The host must serve the generated dist directory. The live canonical domain, CDN compression, response headers, search indexing and Search Console were not tested or changed.
 
-## Deploy
+## Responsive checks
 
-Run `npm ci`, then `npm run build`. Deploy the generated `dist` folder with your existing host. The build includes prerender and SEO verification automatically. The development server is not the deployment artifact.
+Tested the production page in Chrome at these viewport sizes:
 
-Carry the three existing VITE_EMAILJS_* variables into the host's build environment. Confirm the production domain is allowed in EmailJS, then send one controlled test message after deployment. Do not upload .env as a public file.
+| Width × height | Result |
+| --- | --- |
+| 320 × 568 and 320 × 740 | No horizontal document overflow |
+| 360 × 800 | No horizontal document overflow |
+| 390 × 844 | No horizontal document overflow |
+| 430 × 932 | No horizontal document overflow |
+| 768 × 1024 | No overflow; experience card uses full available width |
+| 800 × 900 | No overflow; career animation enabled |
+| 900 × 900 | No overflow; career animation enabled |
+| 1024 × 768 | No overflow; career animation enabled |
+| 1280 × 800 | No overflow; career animation enabled |
+| 1440 × 900 | No overflow; career animation enabled |
+| 844 × 390 landscape | No overflow; long pinned animation disabled |
 
-Serve HTTPS, compressed JS/CSS/HTML, HTTP byte-range requests for MP4 and appropriate caching. `public/_headers` provides asset caching and basic response headers for hosts that support that convention; otherwise apply equivalent host settings. Keep the canonical URL, sitemap and social URLs consistent if the domain changes.
+At the ten primary widths, there was one H1, one contact form and no missing section targets. Copyright text remains 16px.
 
-## Verification limits
+Verified mobile menu open, Escape close, navigation to Contact and empty-form validation. Every contact field has a corresponding label. Verified skills grid/orbital switching, desktop career shortcut landing on the requested role, exit to Education, and education replay.
 
-Browser viewport tests are not a guarantee for every physical device. No physical iPhone/Android Safari test, throttled-network benchmark, deployed Core Web Vitals measurement, search-engine indexing confirmation or live email-delivery test was performed. The full-quality video is intentionally larger; real playback speed depends on the visitor's connection and production hosting. Finish those checks on the deployed site before treating performance and delivery as universally verified.
+## Responsiveness and hanging checks
+
+No browser warning, uncaught error or hydration error was recorded during the checked production flows. A saved Coffee theme reload also completed without hydration errors; the test origin was returned to Light afterward.
+
+The initial phone hero had zero WebGL canvases. The planets video was paused when offscreen. The contact scene loaded and rendered when its illustration entered the viewport. SceneCanvas retains its offscreen/hidden-tab rendering controls and mobile scroll pausing.
+
+A roughly 15-second sample covering skills controls and scrolling recorded about 1.59 seconds of main-thread task time, 0.17 seconds of script time, and about 28 MiB of JavaScript heap. These are one local browser sample, not Lighthouse/Core Web Vitals scores, an FPS benchmark or evidence for low-end devices. No input lock or hang was observed in that sample.
+
+Emulated reduced motion: hero entrance animation was disabled, About text and Education entries were fully visible, and Experience pinning was disabled. The emulation was reset.
+
+## Limits / final checks before release
+
+- Physical iPhone/Safari and Android testing remains necessary for device-specific GPU/video behavior. Chrome viewport emulation does not reproduce those engines or hardware.
+- The desktop video still downloads the original approximately 21 MB clip. This is a bandwidth consideration, especially on slow connections.
+- EmailJS configuration names are present and blank-form validation works. No real email was sent; actual email delivery remains unverified.
+- The existing three-stdlib dependency emits a build-time eval warning from its lottie module. It is not a build failure; dependency replacement is outside this audit.
+- Hosted redirects, caching headers, social image retrieval by external crawlers and live search indexing require a check after deployment.

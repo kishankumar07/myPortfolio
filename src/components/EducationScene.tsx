@@ -1,9 +1,15 @@
+import { useEffect } from 'react';
 import FitScene from './FitScene';
 import SceneCanvas from './SceneCanvas';
 import { OrbitControls, Float, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
 import Books from './Three-d-Items/Books';
 import { useMediaQuery } from 'react-responsive';
+
+function BooksReady() {
+  useEffect(() => { window.dispatchEvent(new Event('education-books-ready')); }, []);
+  return null;
+}
 
 export default function EducationScene() {
   const touch = useMediaQuery({ query: "(pointer: coarse)" });
@@ -79,7 +85,7 @@ return (                <SceneCanvas
                     floatIntensity={0.12}
                     floatingRange={[-0.08, 0.08]}
                   >
-                    <Books {...modelProps} />
+                    <Books {...modelProps} /><BooksReady />
                   </Float>
                   </FitScene>
 
